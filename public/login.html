@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>เข้าสู่ระบบ · PortDee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fff,#1a1a19);--ink:light-dark(#111,#ededea);--mute:light-dark(#6b6b66,#a3a39d);--line:light-dark(#e4e4e0,#33332f);--plane:light-dark(#d8d8d4,#2a2a28);--yel:#ffe600;--dn:light-dark(#b3261e,#ff8a80)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:var(--bg);color:var(--ink);font:16px/1.55 'Hanken Grotesk','IBM Plex Sans Thai',system-ui,sans-serif;padding:16px}
+form{width:min(380px,100%);border-top:6px solid var(--ink);padding-top:22px}
+h1{font-size:28px;margin:0 0 4px;line-height:1.1}
+p{margin:0 0 22px;color:var(--mute);font-size:14px}
+label{display:grid;gap:4px;font-size:14px;color:var(--mute);margin-bottom:14px}
+input{font:inherit;font-size:16px;min-height:46px;padding:8px 12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:0}
+input:focus-visible,button:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
+button{width:100%;font:inherit;font-weight:600;min-height:48px;border:1px solid #111;background:var(--yel);color:#111;cursor:pointer;border-radius:0;margin-top:6px}
+button[disabled]{opacity:.6;cursor:wait}
+.err{color:var(--dn);font-size:14px;min-height:22px;margin-top:10px}
+.bar{display:flex;height:8px;margin-bottom:18px}.bar span{height:100%}
+</style>
+</head>
+<body>
+<form id="f" autocomplete="on">
+  <div class="bar" aria-hidden="true"><span style="width:38%;background:#4d6b5a"></span><span style="width:22%;background:#d4a514"></span><span style="width:18%;background:#6f7f8c"></span><span style="width:12%;background:#9c9c96"></span><span style="width:10%;background:#d2774f"></span></div>
+  <h1 id="an">PortDee</h1>
+  <p>โปรแกรมจัดการพอร์ตการลงทุน · เข้าสู่ระบบเพื่อใช้งาน</p>
+  <label>ชื่อผู้ใช้<input id="u" name="username" autocomplete="username" autocapitalize="none" required autofocus></label>
+  <label>รหัสผ่าน<input id="p" name="password" type="password" autocomplete="current-password" required></label>
+  <button id="b" type="submit">เข้าสู่ระบบ</button>
+  <div class="err" id="e" role="alert"></div>
+</form>
+<script>
+{
+const f=document.getElementById('f'),b=document.getElementById('b'),e=document.getElementById('e');
+fetch('/api/me',{credentials:'same-origin'}).then(r=>{if(r.ok)location.href='/'}).catch(()=>{});
+fetch('/api/app').then(r=>r.json()).then(j=>{if(j.app){document.getElementById('an').textContent=j.app;document.title='เข้าสู่ระบบ · '+j.app}}).catch(()=>{});
+f.addEventListener('submit',async ev=>{ev.preventDefault();e.textContent='';b.disabled=true;b.textContent='กำลังเข้าสู่ระบบ…';
+  try{const r=await fetch('/api/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementById('u').value,password:document.getElementById('p').value})});
+    const j=await r.json().catch(()=>({}));if(r.ok){location.href='/';return}e.textContent=j.error||'เข้าสู่ระบบไม่สำเร็จ'}
+  catch(err){e.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้'}
+  b.disabled=false;b.textContent='เข้าสู่ระบบ'});
+}
+</script>
+</body>
+</html>
