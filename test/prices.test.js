@@ -44,5 +44,8 @@ const it = (id, type, name, cur, extra = {}) => ({ id, type, name, cur, price: 1
   // no key
   delete process.env.SEC_API_KEY;
   await assert.rejects(PX.fundNav('SCBSET', null), /SEC_API_KEY/);
+  assert.strictEqual(PX.sourceFor({ type: 'fx', name: 'BRK.B', cur: 'USD' }).symbol, 'BRK-B');
+  assert.strictEqual(PX.sourceFor({ type: 'th', name: 'BBL.R', cur: 'THB' }).symbol, 'BBL.R.BK');
+  assert.strictEqual(PX.sourceFor({ type: 'fx', name: 'BRK.B', cur: 'USD', sym: 'BRK.B' }).symbol, 'BRK.B', 'own symbol wins');
   console.log('prices: all ok');
 })().catch(e => { console.error(e); process.exit(1); });

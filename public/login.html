@@ -19,6 +19,7 @@ input:focus-visible,button:focus-visible{outline:3px solid var(--yel);outline-of
 button{width:100%;font:inherit;font-weight:600;min-height:48px;border:1px solid #111;background:var(--yel);color:#111;cursor:pointer;border-radius:0;margin-top:6px}
 button[disabled]{opacity:.6;cursor:wait}
 .err{color:var(--dn);font-size:14px;min-height:22px;margin-top:10px}
+.lang{position:fixed;top:12px;right:12px;width:auto;min-height:36px;padding:0 12px;background:var(--bg);color:var(--ink);border:1px solid var(--line);margin:0;font-weight:500}
 .bar{display:flex;height:8px;margin-bottom:18px}.bar span{height:100%}
 </style>
 </head>
@@ -26,22 +27,33 @@ button[disabled]{opacity:.6;cursor:wait}
 <form id="f" autocomplete="on">
   <div class="bar" aria-hidden="true"><span style="width:38%;background:#4d6b5a"></span><span style="width:22%;background:#d4a514"></span><span style="width:18%;background:#6f7f8c"></span><span style="width:12%;background:#9c9c96"></span><span style="width:10%;background:#d2774f"></span></div>
   <h1 id="an">PortDee</h1>
-  <p>โปรแกรมจัดการพอร์ตการลงทุน · เข้าสู่ระบบเพื่อใช้งาน</p>
-  <label>ชื่อผู้ใช้<input id="u" name="username" autocomplete="username" autocapitalize="none" required autofocus></label>
-  <label>รหัสผ่าน<input id="p" name="password" type="password" autocomplete="current-password" required></label>
+  <p id="sub">โปรแกรมจัดการพอร์ตการลงทุน · เข้าสู่ระบบเพื่อใช้งาน</p>
+  <label><span id="lu">ชื่อผู้ใช้</span><input id="u" name="username" autocomplete="username" autocapitalize="none" required autofocus></label>
+  <label><span id="lp">รหัสผ่าน</span><input id="p" name="password" type="password" autocomplete="current-password" required></label>
   <button id="b" type="submit">เข้าสู่ระบบ</button>
   <div class="err" id="e" role="alert"></div>
 </form>
+<button type="button" class="lang" id="lang" aria-label="Language">EN</button>
 <script>
 {
 const f=document.getElementById('f'),b=document.getElementById('b'),e=document.getElementById('e');
+// language (the same setting as inside the program)
+const EN={'โปรแกรมจัดการพอร์ตการลงทุน · เข้าสู่ระบบเพื่อใช้งาน':'Investment portfolio manager · log in to continue','ชื่อผู้ใช้':'Username','รหัสผ่าน':'Password','เข้าสู่ระบบ':'Log in',
+  'กำลังเข้าสู่ระบบ…':'Logging in…','เข้าสู่ระบบไม่สำเร็จ':'Login failed','เชื่อมต่อเซิร์ฟเวอร์ไม่ได้':"Can't connect to the server",'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง':'Wrong username or password',
+  'ลองเข้าสู่ระบบผิดหลายครั้ง กรุณารอ 15 นาที':'Too many failed logins. Please wait 15 minutes','บัญชีนี้ถูกแก้ไขนอกโปรแกรม ระบบล็อกไว้ กรุณาติดต่อเจ้าของระบบ':'This account was changed outside the program and is locked. Please contact the owner'};
+let L='th';try{L=localStorage.getItem('pd-lang')==='en'?'en':'th'}catch(_){}
+const T=s=>L==='en'&&EN[s]||s;
+function paint(){document.documentElement.lang=L;document.getElementById('sub').textContent=T('โปรแกรมจัดการพอร์ตการลงทุน · เข้าสู่ระบบเพื่อใช้งาน');
+  document.getElementById('lu').textContent=T('ชื่อผู้ใช้');document.getElementById('lp').textContent=T('รหัสผ่าน');if(!b.disabled)b.textContent=T('เข้าสู่ระบบ');
+  document.getElementById('lang').textContent=L==='en'?'ไทย':'EN';document.title=T('เข้าสู่ระบบ')+' · '+(document.getElementById('an').textContent||'PortDee')}
+document.getElementById('lang').onclick=()=>{L=L==='en'?'th':'en';try{localStorage.setItem('pd-lang',L)}catch(_){}paint()};paint();
 fetch('/api/me',{credentials:'same-origin'}).then(r=>{if(r.ok)location.href='/'}).catch(()=>{});
-fetch('/api/app').then(r=>r.json()).then(j=>{if(j.app){document.getElementById('an').textContent=j.app;document.title='เข้าสู่ระบบ · '+j.app}}).catch(()=>{});
-f.addEventListener('submit',async ev=>{ev.preventDefault();e.textContent='';b.disabled=true;b.textContent='กำลังเข้าสู่ระบบ…';
+fetch('/api/app').then(r=>r.json()).then(j=>{if(j.app){document.getElementById('an').textContent=j.app;document.title=T('เข้าสู่ระบบ')+' · '+j.app}}).catch(()=>{});
+f.addEventListener('submit',async ev=>{ev.preventDefault();e.textContent='';b.disabled=true;b.textContent=T('กำลังเข้าสู่ระบบ…');
   try{const r=await fetch('/api/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementById('u').value,password:document.getElementById('p').value})});
-    const j=await r.json().catch(()=>({}));if(r.ok){try{sessionStorage.removeItem('pdPx')}catch(_){}location.href='/';return}e.textContent=j.error||'เข้าสู่ระบบไม่สำเร็จ'}
-  catch(err){e.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้'}
-  b.disabled=false;b.textContent='เข้าสู่ระบบ'});
+    const j=await r.json().catch(()=>({}));if(r.ok){try{sessionStorage.removeItem('pdPx')}catch(_){}location.href='/';return}e.textContent=T(j.error||'เข้าสู่ระบบไม่สำเร็จ')}
+  catch(err){e.textContent=T('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้')}
+  b.disabled=false;b.textContent=T('เข้าสู่ระบบ')});
 }
 </script>
 </body>
