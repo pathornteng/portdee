@@ -39,7 +39,7 @@ fetch('/api/me',{credentials:'same-origin'}).then(r=>{if(r.ok)location.href='/'}
 fetch('/api/app').then(r=>r.json()).then(j=>{if(j.app){document.getElementById('an').textContent=j.app;document.title='เข้าสู่ระบบ · '+j.app}}).catch(()=>{});
 f.addEventListener('submit',async ev=>{ev.preventDefault();e.textContent='';b.disabled=true;b.textContent='กำลังเข้าสู่ระบบ…';
   try{const r=await fetch('/api/login',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:document.getElementById('u').value,password:document.getElementById('p').value})});
-    const j=await r.json().catch(()=>({}));if(r.ok){location.href='/';return}e.textContent=j.error||'เข้าสู่ระบบไม่สำเร็จ'}
+    const j=await r.json().catch(()=>({}));if(r.ok){try{sessionStorage.removeItem('pdPx')}catch(_){}location.href='/';return}e.textContent=j.error||'เข้าสู่ระบบไม่สำเร็จ'}
   catch(err){e.textContent='เชื่อมต่อเซิร์ฟเวอร์ไม่ได้'}
   b.disabled=false;b.textContent='เข้าสู่ระบบ'});
 }

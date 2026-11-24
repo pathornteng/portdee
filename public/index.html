@@ -13,7 +13,7 @@
    COLOUR and TYPE: white, black, concrete planes, safety yellow only on primary actions; Hanken Grotesk + IBM Plex Sans Thai
    LAYOUT: title + actions, total + strip, maturities, brokers, then the holdings ledger */
 :root{color-scheme:light dark;--bg:light-dark(#fff,#1a1a19);--ink:light-dark(#111,#ededea);--mute:light-dark(#6b6b66,#a3a39d);--plane:light-dark(#d8d8d4,#2a2a28);--line:light-dark(#e4e4e0,#33332f);--soft:light-dark(#f3f3f0,#222220);--yel:#ffe600;--up:light-dark(#127a3a,#5fd38a);--dn:light-dark(#b3261e,#ff8a80);
---c-th:light-dark(#1f1f1e,#f2f2ee);--c-fx:#6f7f8c;--c-au:#d4a514;--c-etf:#9c9c96;--c-fd:#4d6b5a;--c-bd:#b3a68f;--c-gsb:#d2774f;--c-cs:light-dark(#c9c9c3,#55554f);--c-cash:light-dark(#8fb8b0,#4f7a72)}
+--c-th:light-dark(#3366e0,#6b93ff);--c-fd:light-dark(#14a38b,#3cc9ae);--c-fx:light-dark(#7b55f0,#a088ff);--c-etf:light-dark(#f2734a,#ff9470);--c-au:light-dark(#f0b323,#ffc94d);--c-bd:light-dark(#5b8fb9,#86b4da);--c-gsb:light-dark(#e2508a,#ff7aa9);--c-cs:light-dark(#8cbf4f,#a9d870);--c-cash:light-dark(#8fb8b0,#4f7a72)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 [hidden]{display:none!important}
@@ -24,6 +24,12 @@ body.viewer :is(#bAdd,#bPx,#bFx,#xImp,#xTpl,#bGoTx,#fTx,#bDel,#bClear,.pxu,[data
 .foot{padding:20px max(5vw,16px) 40px;color:var(--mute);font-size:13px;text-align:center}
 .secbar{background:var(--dn);color:#fff;padding:10px max(5vw,16px);display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-weight:500}.secbar button{border-color:#fff;color:#fff;min-height:36px}
 tr.tamper td{background:light-dark(#fdecea,#3a1f1d)}
+.scopebar{background:light-dark(#eef4ff,#1d2636);padding:8px max(5vw,16px);font-size:14px}.scopebar.none{background:var(--dn);color:#fff}
+body.limited :is(#bFx,.full-only){display:none!important}
+.ck{display:inline-flex;gap:6px;align-items:center;font-size:15px;min-height:36px;margin-right:14px}.ck input{width:18px!important;height:18px!important;min-height:0!important;padding:0!important;margin:0;flex:none;accent-color:var(--ink,#111)}
+#ovUsers .dlg{width:min(1180px,100%)}.nw{white-space:nowrap}.ulast{font-size:13px;color:var(--mute);line-height:1.5}.ckg{display:flex;flex-wrap:wrap;padding:2px 0 0 4px}
+.pxauto{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;background:light-dark(#f6f7f9,#20242b);border-radius:10px;padding:10px 12px;margin:0 0 12px;font-size:14px}
+.pxauto #pxAuto{flex:1 1 320px}body.viewer #pxRun{display:none}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Hanken Grotesk','IBM Plex Sans Thai',system-ui,sans-serif;overflow-x:clip}
 .band{padding:clamp(24px,4vw,56px) max(5vw,16px)}
 .wrap{max-width:1240px;margin:0 auto}
@@ -41,6 +47,7 @@ button.ghost{border-color:transparent;color:var(--mute);padding:0 10px}
 .big small{font-size:.35em;font-weight:500;margin-left:6px;color:var(--mute)}
 .kp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);margin-top:22px;border:1px solid var(--line)}
 .kp>div{background:var(--bg);padding:12px 14px}.kp .sub{display:block}
+.sb{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:center;color:inherit}.sb:hover{color:var(--ink)}.sb:focus-visible{outline:3px solid var(--yel)}.sb .ar{font-size:11px;opacity:.55}th[aria-sort=ascending] .sb,th[aria-sort=descending] .sb{color:var(--ink);font-weight:600}th[aria-sort=ascending] .ar,th[aria-sort=descending] .ar{opacity:1}
 .detviz{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px}@media(max-width:720px){.detviz{grid-template-columns:minmax(0,1fr)}}
 .cb{display:grid;grid-template-columns:7.5em minmax(0,1fr) auto;gap:8px;align-items:center;padding:5px 0;font-size:14px;font-variant-numeric:tabular-nums}.cb .gt{height:18px}.cb b{white-space:nowrap}
 .gch{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;margin:4px 0 22px}.gch .lab{margin-bottom:8px}
@@ -53,13 +60,19 @@ button.ghost{border-color:transparent;color:var(--mute);padding:0 10px}
 .totsub{font-size:14px;color:var(--mute);margin-top:6px;font-variant-numeric:tabular-nums}.totsub button{all:unset;cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:2px;margin-left:6px}
 .sold{margin-top:14px;border:1px solid var(--line);border-top:3px solid var(--ink);padding:12px 14px}
 .sold-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 16px;margin-top:6px;font-variant-numeric:tabular-nums}.sold-g b{display:block;font-size:20px;white-space:nowrap}.sold-g .big2{font-size:20px}
-.sold .sub{margin-top:8px}
+.sold .sub{margin-top:8px}.sold-g .sub{margin-top:0;display:block}.sold-t{grid-column:1/-1;border-top:1px solid var(--line);padding-top:8px}.sold-t .big2{font-size:26px}
 .kp b{display:block;font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .up{color:var(--up)}.dn{color:var(--dn)}
-.strip{display:flex;height:56px;background:var(--plane);margin-bottom:18px}
+.alloc{display:grid;grid-template-columns:minmax(170px,220px) minmax(0,1fr);gap:22px;align-items:center}
+.lg{display:grid;grid-template-columns:12px minmax(0,1fr) auto;column-gap:10px;align-items:center;padding:7px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.lg i{width:12px;height:12px;border-radius:50%;display:block}.lg .ln{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lg .lp{font-weight:700;font-size:17px}
+.lg .lv{grid-column:2/4;font-size:13px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.donut svg{width:100%;height:auto;display:block;color:var(--ink);overflow:visible}
+.donut .sg{transition:stroke-width .2s;cursor:default}.donut .sg:hover{stroke-width:42}
+@media(max-width:600px){.alloc{grid-template-columns:minmax(0,1fr)}.donut{max-width:240px;margin:0 auto}}
 .strip span{height:100%;transition:width .5s}
 .row{display:grid;grid-template-columns:14px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
-.row i{width:14px;height:14px;display:block}.row .v{text-align:right;white-space:nowrap}.row .p{width:58px;text-align:right;color:var(--mute)}
+.row i{width:14px;height:14px;display:block;border-radius:50%}.row .v{text-align:right;white-space:nowrap}.row .p{width:58px;text-align:right;color:var(--mute)}
 .row .bar{grid-column:2/5;height:4px;background:var(--soft)}.row .bar>span{display:block;height:100%}
 .mat{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
 .mat>div{background:var(--bg);padding:14px 16px;border-left:4px solid var(--plane)}
@@ -120,6 +133,7 @@ pre,.scroll{overflow-x:auto}
 @media(max-width:600px){table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;white-space:normal;color:var(--mute)}.stack td:empty{display:none}.acts{justify-content:flex-start}}
 </style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head><body>
 <div class="secbar" id="secBar" hidden>⚠️ มีเหตุการณ์ด้านความปลอดภัย <b id="secN">0</b> รายการที่ยังไม่ได้รับทราบ <button id="secBtn">ดูรายละเอียด</button></div>
+<div class="scopebar" id="scopeBar" hidden>👁 คุณเห็นเฉพาะ: <b id="scopeTxt"></b></div>
 <div class="band"><div class="wrap">
   <div class="top">
     <div><h1><span id="appName">PortDee</span> · พอร์ตการลงทุน</h1><div class="status" id="status">กำลังโหลด…</div></div>
@@ -144,17 +158,17 @@ pre,.scroll{overflow-x:auto}
         <div><span class="lab">ผลตอบแทนของที่ยังถือ</span><b id="kPct">0%</b></div>
         <div><span class="lab">กำไรจากที่ขายไปแล้ว</span><b id="kReal">0</b></div>
         <div id="kFeeBox"><span class="lab">ค่าธรรมเนียมสะสม</span><b id="kFee">0</b><button class="ghost" id="bFee" style="padding:0;min-height:32px;text-decoration:underline">ดูรายงาน →</button></div>
-        <div><span class="lab">รางวัล/ดอกเบี้ย/ปันผลที่รับแล้ว</span><b id="kInc">0</b><button class="ghost" id="bInc" style="padding:0;min-height:32px;text-decoration:underline">ดูรายงาน →</button></div>
         <div id="kIntBox"><span class="lab">ดอกเบี้ย/ปันผลต่อปี (ประมาณ)</span><b id="kInt">0</b></div>
         <div id="kAllBox"><span class="lab">กำไรรวมทั้งหมด</span><b id="kAll">0</b><span class="sub" id="kAllP">ที่ยังถือ + ที่ขายแล้ว + รายได้ที่รับ</span></div>
       </div>
       <div class="sold" id="soldBox">
-        <div class="lab">ที่ขายไปแล้ว</div>
+        <div class="lab">ที่ขายไปแล้ว / ได้รับแล้ว</div>
         <div class="sold-g">
           <div><span class="lab">ยอดขายรวม</span><b id="sProc">0</b></div>
           <div><span class="lab">ต้นทุนของที่ขาย</span><b id="sCost">0</b></div>
-          <div><span class="lab">กำไรจากการขาย</span><b id="sPl">0</b></div>
-          <div><span class="lab">คิดเป็น</span><b id="sPct" class="big2">0%</b></div>
+          <div><span class="lab">กำไรจากการขาย</span><b id="sPl">0</b><span class="sub" id="sPct"></span></div>
+          <div><span class="lab">รางวัล/ดอกเบี้ย/ปันผลที่รับแล้ว</span><b id="kInc">0</b><button class="ghost" id="bInc" style="padding:0;min-height:28px;text-decoration:underline">ดูรายงาน →</button></div>
+          <div class="sold-t"><span class="lab">รวมที่ได้รับแล้ว (กำไรจากการขาย + รางวัล/ดอกเบี้ย/ปันผล)</span><b id="sTot" class="big2">0</b></div>
         </div>
         <div class="sub" id="sNote"></div>
       </div>
@@ -162,8 +176,7 @@ pre,.scroll{overflow-x:auto}
     </div>
     <div>
       <div class="lab" style="margin-bottom:8px">สัดส่วนตามประเภทสินทรัพย์</div>
-      <div class="strip" id="strip"></div>
-      <div id="rows"></div>
+      <div class="alloc"><div class="donut"><svg id="strip" viewBox="0 0 220 220" role="img" aria-label="กราฟวงกลมสัดส่วนสินทรัพย์"></svg></div><div id="rows"></div></div>
     </div>
   </div>
 </div></div>
@@ -194,6 +207,7 @@ pre,.scroll{overflow-x:auto}
     <label>สกุลเงิน<select id="iCur"></select></label>
     <label class="w">ชื่อ / สัญลักษณ์<input id="iName" required placeholder="เช่น PTT, AAPL, ทองคำแท่ง 96.5%"></label>
     <label>โบรกเกอร์ / บัญชี<input id="iAcc" list="accList" placeholder="เช่น Bualuang, Dime"></label>
+    <label class="w">รหัสสำหรับดึงราคาอัตโนมัติ <span class="sub">(ไม่บังคับ · ใส่ - เพื่อปิด)</span><input id="iSym" autocomplete="off" placeholder=""></label>
     <label><span id="lPx">ราคาล่าสุดต่อหน่วย</span><input id="iPrice" type="number" step="any" min="0" placeholder="เว้นว่าง = ใช้ราคาที่ซื้อ"></label>
     <label>ดอกเบี้ย/ปันผล % ต่อปี<input id="iRate" type="number" step="any" min="0" placeholder="ไม่บังคับ"><span class="sub">ใช้ประมาณรายได้ต่อปี = มูลค่า × %</span></label>
     <label>วันครบกำหนด<input id="iMat" type="date"></label>
@@ -235,7 +249,8 @@ pre,.scroll{overflow-x:auto}
 
 <div class="ov" id="ovPx"><form class="dlg wide" id="fPx">
   <h2 id="pxH">อัปเดตราคาล่าสุด</h2>
-  <p class="note" style="margin-top:0">ดูราคาจากแอปโบรกเกอร์ หน้าเว็บกองทุน หรือประกาศราคาทอง แล้วกรอกทีเดียวทุกตัว</p>
+  <div class="pxauto"><div id="pxAuto"></div><button type="button" class="chip" id="pxRun">ดึงราคาอัตโนมัติตอนนี้</button></div>
+  <p class="note" style="margin-top:0">หรือกรอกราคาเองด้านล่าง (ราคาที่กรอกเองจะถูกแทนที่ในรอบดึงอัตโนมัติถัดไป ถ้าไม่ต้องการ ให้ใส่รหัสดึงราคาเป็น - ที่หน้าแก้ไขสินทรัพย์)</p>
   <div class="scroll" id="pxList"></div>
   <div class="act"><button type="button" data-close>ยกเลิก</button><button type="submit" class="pri">บันทึกราคา</button></div>
 </form></div>
@@ -332,7 +347,8 @@ pre,.scroll{overflow-x:auto}
   <div class="menu">
     <button type="button" id="acPw">เปลี่ยนรหัสผ่าน</button>
     <button type="button" id="acUsers" class="admin-only">จัดการผู้ใช้</button>
-    <button type="button" id="acLog" class="admin-only">ประวัติการแก้ไข / กู้คืนข้อมูล</button>
+    <button type="button" id="acLog" class="admin-only full-only">ประวัติการแก้ไข / กู้คืนข้อมูล</button>
+    <button type="button" id="acAct">ประวัติการใช้งาน</button>
     <button type="button" id="acOut" style="color:var(--dn)">ออกจากระบบ</button>
   </div>
   <div class="act"><button type="button" data-close>ปิด</button></div>
@@ -352,6 +368,7 @@ pre,.scroll{overflow-x:auto}
 <div class="ov" id="ovUsers"><div class="dlg wide">
   <h2>จัดการผู้ใช้</h2>
   <p class="note" style="margin-top:0"><b>ผู้ดูแล (admin)</b> ทำได้ทุกอย่าง และจัดการผู้ใช้ · <b>ผู้แก้ไข (creator)</b> เพิ่ม/แก้/ลบข้อมูลพอร์ตได้ · <b>ผู้ดู (viewer)</b> ดูและส่งออกรายงานได้อย่างเดียว</p>
+  <div class="act" style="margin:0 0 10px;justify-content:flex-start"><button type="button" class="chip" id="usAct">📋 รายงานการใช้งานทั้งหมด (ใครเข้าระบบ ทำอะไร)</button></div>
   <div class="scroll" id="usList"></div>
   <form class="f5" id="fNewUser" style="grid-template-columns:repeat(5,minmax(0,1fr))">
     <label>ชื่อผู้ใช้ (a-z 0-9)<input id="nuU" required pattern="[A-Za-z0-9._\-]{3,32}" autocomplete="off"></label>
@@ -387,6 +404,35 @@ pre,.scroll{overflow-x:auto}
   <div class="act"><button type="button" id="secUsers">ไปหน้าจัดการผู้ใช้</button><button type="button" id="secSeen" class="pri">รับทราบทั้งหมด</button><button type="button" data-close>ปิด</button></div>
 </div></div>
 
+<div class="ov" id="ovScope" style="z-index:11"><form class="dlg" id="fScope" style="width:min(560px,100%)">
+  <h2 id="scT">ขอบเขต</h2>
+  <p class="note" style="margin-top:0">ผู้ใช้จะเห็นและแก้ได้เฉพาะสินทรัพย์ที่อยู่ในโบรกที่เลือก <b>และ</b> เป็นประเภทที่เลือก · เงินสดเห็นเฉพาะของโบรกที่เลือก · ค่าเงินแก้ได้เฉพาะคนที่เห็นทั้งหมด</p>
+  <h3 style="margin:14px 0 6px;font-size:16px">โบรกเกอร์</h3>
+  <label class="ck"><input type="checkbox" id="scAllB"> <b>ทุกโบรก</b> <span class="sub">(รวมโบรกที่เพิ่มในอนาคต)</span></label>
+  <div class="ckg" id="scB"></div>
+  <div class="fee" style="grid-template-columns:minmax(0,1fr) auto;margin-top:6px"><input id="scNew" placeholder="เพิ่มชื่อโบรกที่ยังไม่มีในพอร์ต" aria-label="ชื่อโบรก"><button type="button" class="chip" id="scAdd">+ เพิ่ม</button></div>
+  <h3 style="margin:16px 0 6px;font-size:16px">ประเภทสินทรัพย์</h3>
+  <label class="ck"><input type="checkbox" id="scAllT"> <b>ทุกประเภท</b></label>
+  <div class="ckg" id="scTy"></div>
+  <p class="note" id="scMsg" style="color:var(--dn)"></p>
+  <div class="act"><button type="button" onclick="document.getElementById('ovScope').classList.remove('on')">ยกเลิก</button><button type="submit" class="pri">บันทึกขอบเขต</button></div>
+</form></div>
+
+<div class="ov" id="ovAct"><div class="dlg wide">
+  <h2 id="acTt">รายงานการใช้งาน</h2>
+  <form class="f5" id="fAct" style="grid-template-columns:repeat(5,minmax(0,1fr))">
+    <label>ผู้ใช้<select id="afU"></select></label>
+    <label>เหตุการณ์<select id="afG"></select></label>
+    <label>ตั้งแต่<input id="afF" type="date"></label>
+    <label>ถึง<input id="afT" type="date"></label>
+    <button type="submit" class="pri">แสดง</button>
+  </form>
+  <p class="note" id="actSum"></p>
+  <div class="scroll" id="actList" style="max-height:55vh;overflow:auto"></div>
+  <p class="note">เก็บประวัติไว้ 1 ปี (เหตุการณ์ด้านความปลอดภัยเก็บตลอด) · IP คือที่อยู่เครือข่ายที่ใช้เข้า อาจเปลี่ยนตามเน็ตมือถือ/Wi-Fi · "เปิดดูพอร์ต" บันทึกอย่างมากทุก 30 นาทีต่อคน</p>
+  <div class="act"><button type="button" class="chip" id="actMore" hidden>โหลดเพิ่ม</button><button type="button" id="actXl">ส่งออก Excel</button><button type="button" data-close>ปิด</button></div>
+</div></div>
+
 <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastT"></span><button id="toastU">เลิกทำ</button><button id="toastX" aria-label="ปิด">✕</button></div>
 
 <script src="/vendor/xlsx.full.min.js"></script>
@@ -417,7 +463,7 @@ const SAMPLE=()=>[
 
 let S={items:[],fx:{...DEF_FX},sample:false};
 S.cash=S.cash||[];
-let incYr='',incKind='',incBy='asset',view='row',detKey=null,feeYr='',txEdit=null,filt='all',bf=new Set(),q='',editId=null,txId=null,undo=null,ref=null,saveT=null,dl=null,CM=new Map();
+let incYr='',incKind='',incBy='asset',view='row',detKey=null,feeYr='',txEdit=null,filt=new Set(),srt={k:null,d:-1},bf=new Set(),q='',editId=null,txId=null,undo=null,ref=null,saveT=null,dl=null,CM=new Map();
 const $=id=>document.getElementById(id);
 const nf=(v,d=2)=>new Intl.NumberFormat('th-TH',{minimumFractionDigits:0,maximumFractionDigits:d}).format(v||0);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -429,7 +475,7 @@ const brk=h=>h.acc||NOBRK;
 const pxQ=h=>({th:h.name+' ราคาหุ้น',fx:h.name+' stock price',etf:h.name+' ETF price',fd:h.name+' NAV ราคากองทุน',au:h.cur==='USD'?'gold spot price per ounce USD':'ราคาทองคำ ออนซ์ บาท'})[h.type];
 const pxLink=h=>pxQ(h)?`<a class="pxl" href="https://www.google.com/search?q=${encodeURIComponent(pxQ(h))}" target="_blank" rel="noopener noreferrer">ดูราคา ↗</a>`:'';
 const ago=t=>{if(!t)return'ยังไม่เคยอัปเดต';const d=new Date(t),n=new Date(),days=Math.floor((new Date(n.toDateString())-new Date(d.toDateString()))/864e5);return'อัปเดต '+(days===0?'วันนี้ '+d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}):days===1?'เมื่อวาน':days<7?days+' วันก่อน':d.toLocaleDateString('th-TH',{day:'numeric',month:'short',year:'2-digit'}))};
-const setPx=(h,v)=>{if(+h.price!==v){h.price=v;h.pxAt=Date.now()}};
+const setPx=(h,v)=>{if(+h.price!==v){h.price=v;h.pxAt=Date.now();delete h.pxSrc}};
 const pkey=h=>h.type+'|'+String(h.name||'').trim().toLowerCase()+'|'+h.cur;
 const sibs=h=>S.items.filter(g=>pkey(g)===pkey(h));
 const setPxAll=(h,v)=>{for(const g of sibs(h))setPx(g,v)};
@@ -492,16 +538,24 @@ function render(){
   $('kFee').textContent=nf(sum(it,'feesT'),0);
   {const I=sum(it,'incT'),A=P+R+I;$('kInc').textContent=(I?'+':'')+nf(I,0);$('kInc').className=cls(I);$('kAll').textContent=sign(A)+nf(A,0);$('kAll').className=cls(A);
     const G=grossOf(cb);$('kAllP').innerHTML=G>0?`<b class="${cls(A)}" style="display:inline;font-size:15px">${sign(A)}${nf(A/G*100)}%</b> ของเงินที่ใส่เข้าพอร์ตทั้งหมด ${nf(G,0)} บาท`:'ที่ยังถือ + ที่ขายแล้ว + รายได้ที่รับ'}
-  {const est=it.reduce((a,h)=>a+c(h).vT*(+h.rate||0)/100,0);$('kInt').textContent=nf(est,0);$('kIntBox').hidden=!est;$('kAllBox').style.gridColumn=est?'':'1/-1'}
+  {const est=it.reduce((a,h)=>a+c(h).vT*(+h.rate||0)/100,0);$('kInt').textContent=nf(est,0);$('kIntBox').hidden=!est;$('kAllBox').style.gridColumn=est?'1/-1':''}
   {const sp=sum(it,'procT'),sc=sum(it,'soldCT'),sr=sum(it,'realT'),n=it.reduce((a,h)=>a+h.txns.filter(t=>t.side==='sell').length,0);
-    $('soldBox').hidden=!n;$('sProc').textContent=nf(sp,0);$('sCost').textContent=nf(sc,0);$('sPl').textContent=sign(sr)+nf(sr,0);$('sPl').className=cls(sr);
-    const spc=sc?sr/sc*100:0;$('sPct').textContent=sign(spc)+nf(spc)+'%';$('sPct').className='big2 '+cls(spc);
-    $('sNote').textContent='ขายไป '+n+' ครั้ง · ยอดขายหักค่าธรรมเนียมแล้ว · % = กำไร ÷ ต้นทุนของที่ขาย · เงินที่ได้อยู่ในเงินสดของโบรกแล้ว'}
+    const I2=sum(it,'incT'),ni=it.reduce((a,h)=>a+h.txns.filter(t=>t.side==='inc').length,0),ST=sr+I2;
+    $('soldBox').hidden=!n&&!ni;$('sProc').textContent=nf(sp,0);$('sCost').textContent=nf(sc,0);$('sPl').textContent=sign(sr)+nf(sr,0);$('sPl').className=cls(sr);
+    const spc=sc?sr/sc*100:0;$('sPct').textContent=n?'คิดเป็น '+sign(spc)+nf(spc)+'% ของต้นทุนที่ขาย':'ยังไม่มีการขาย';$('sPct').className='sub '+(n?cls(spc):'');
+    $('sTot').textContent=sign(ST)+nf(ST,0);$('sTot').className='big2 '+cls(ST);
+    $('sNote').textContent=[n?'ขายไป '+n+' ครั้ง (ยอดขายหักค่าธรรมเนียมแล้ว)':'',ni?'รับรางวัล/ดอกเบี้ย/ปันผล '+ni+' ครั้ง':'','เงินที่ได้อยู่ในเงินสดของโบรกแล้ว'].filter(Boolean).join(' · ')}
   $('sampleNote').hidden=!S.sample;
   const g=TYPES.map(t=>{const xs=it.filter(h=>h.type===t.k&&c(h).q>0);return{...t,v:sum(xs,'vT'),c:sum(xs,'cT'),n2:xs.length}}).filter(t=>t.n2).sort((a,b)=>b.v-a.v);
   const pct=v=>V?v/V*100:0;
-  $('strip').innerHTML=g.map(t=>`<span title="${t.n}" style="width:${pct(t.v)}%;background:var(--c-${t.k})"></span>`).join('');
-  $('rows').innerHTML=g.length?g.map(t=>{const p=t.v-t.c;return`<div class="row"><i style="background:var(--c-${t.k})"></i><span>${t.n} <span class="lab">· ${t.n2} ${t.unit||'รายการ'}</span></span><span class="v">${nf(t.v,0)} ${t.k==='cash'?'':`<span class="${cls(p)}" style="font-size:13px">${sign(p)}${nf(p,0)}</span>`}</span><span class="p">${nf(pct(t.v),1)}%</span><div class="bar"><span style="width:${pct(t.v)}%;background:var(--c-${t.k})"></span></div></div>`}).join(''):'<div class="empty">ยังไม่มีรายการ</div>';
+  {const R0=78,CIR=2*Math.PI*R0,live=g.filter(t=>t.v>0);let off=0,ang=-Math.PI/2;
+    const seg=live.map(t=>{const f=V?t.v/V:0,len=f*CIR,gap=live.length>1&&len>4?2:0,mid=ang+f*Math.PI;ang+=f*2*Math.PI;
+      const c=`<circle class="sg" r="${R0}" cx="110" cy="110" fill="none" stroke="var(--c-${t.k})" stroke-width="34" stroke-dasharray="${Math.max(len-gap,0.01)} ${CIR}" stroke-dashoffset="${-off}" transform="rotate(-90 110 110)"><title>${t.n} ${nf(f*100,1)}% · ${nf(t.v,0)} บาท</title></circle>`
+        +(f>=0.06?`<text x="${110+R0*Math.cos(mid)}" y="${110+R0*Math.sin(mid)+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" pointer-events="none">${nf(f*100,0)}%</text>`:'');off+=len;return c}).join('');
+    const big=V>=1e6?(V/1e6).toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2})+'M':nf(V,0);
+    $('strip').innerHTML=(live.length?seg:`<circle r="${R0}" cx="110" cy="110" fill="none" stroke="var(--plane)" stroke-width="34"/>`)
+      +`<text x="110" y="102" text-anchor="middle" font-size="12" fill="currentColor" opacity=".6">มูลค่ารวม</text><text x="110" y="126" text-anchor="middle" font-size="${big.length>9?18:22}" font-weight="700" fill="currentColor">${big}</text><text x="110" y="144" text-anchor="middle" font-size="11" fill="currentColor" opacity=".6">บาท</text>`}
+  $('rows').innerHTML=g.length?g.map(t=>{const p=t.v-t.c;return`<div class="lg"><i style="background:var(--c-${t.k})"></i><span class="ln">${t.n}</span><span class="lp">${nf(pct(t.v),1)}%</span><span class="lv">${nf(t.v,0)} บาท <span class="${cls(p)}">${sign(p)}${nf(p,0)}</span> · ${t.n2} ${t.unit||'รายการ'}</span></div>`}).join(''):'<div class="empty">ยังไม่มีรายการ</div>';
   const t0=new Date(today());
   const ms=it.filter(h=>h.mat&&c(h).q>0).map(h=>({h,days:Math.round((new Date(h.mat)-t0)/864e5)})).sort((a,b)=>a.days-b.days);
   $('matBand').hidden=!ms.length;
@@ -516,22 +570,24 @@ function render(){
   // table
   const pool=it;
   $('listH').textContent=bf.size?'รายการ · '+[...bf].join(', ')+' · รวม '+nf(sum(pool,'vT'),0)+' บาท':'รายการทั้งหมด';
-  const used=TYPES.filter(t=>pool.some(h=>h.type===t.k));
-  if(filt!=='all'&&!used.some(t=>t.k===filt))filt='all';
-  $('chips').innerHTML=`<button class="chip" data-view="row" aria-pressed="${view==='row'}">แยกตามโบรก</button><button class="chip" data-view="group" aria-pressed="${view==='group'}" style="margin-right:10px">รวมตามตัว</button>`+(bf.size?`<button class="chip" data-b="all">× ล้างตัวกรองโบรกเกอร์</button>`:'')+[{k:'all',n:'ทุกประเภท'},...used].map(t=>`<button class="chip" data-f="${t.k}" aria-pressed="${filt===t.k}">${t.n}</button>`).join('')+`<input class="search" id="q" placeholder="ค้นหาชื่อ…" value="${esc(q)}">`;
-  const rs=pool.filter(h=>(filt==='all'||h.type===filt)&&(!q||(h.name+' '+(h.acc||'')+' '+(h.note||'')).toLowerCase().includes(q.toLowerCase())));
+  const ORD=['th','fd','fx','etf','au','bd','gsb','cs'];const used=TYPES.filter(t=>pool.some(h=>h.type===t.k)).sort((a,b)=>ORD.indexOf(a.k)-ORD.indexOf(b.k));
+  for(const k of [...filt])if(!used.some(t=>t.k===k))filt.delete(k);
+  $('chips').innerHTML=`<button class="chip" data-view="row" aria-pressed="${view==='row'}">แยกตามโบรก</button><button class="chip" data-view="group" aria-pressed="${view==='group'}" style="margin-right:10px">รวมตามตัว</button>`+(bf.size?`<button class="chip" data-b="all">× ล้างตัวกรองโบรกเกอร์</button>`:'')+[{k:'all',n:'ทุกประเภท'},...used].map(t=>`<button class="chip" data-f="${t.k}" aria-pressed="${t.k==='all'?!filt.size:filt.has(t.k)}">${t.n}</button>`).join('')+`<input class="search" id="q" placeholder="ค้นหาชื่อ…" value="${esc(q)}">`;
+  const rs=pool.filter(h=>(!filt.size||filt.has(h.type))&&(!q||(h.name+' '+(h.acc||'')+' '+(h.note||'')).toLowerCase().includes(q.toLowerCase())));
   const mk=hs=>{const ks=hs.map(c),h=hs[0],qq=ks.reduce((a,k)=>a+k.q,0),cn=ks.reduce((a,k)=>a+k.c,0),S2=f=>ks.reduce((a,k)=>a+k[f],0);
     return{key:pkey(h),hs,h,name:h.name,type:h.type,cur:h.cur,q:qq,avg:qq?cn/qq:0,price:+h.price||0,pxAt:Math.min(...hs.map(x=>x.pxAt||0))||0,vN:qq*(+h.price||0),vT:S2('vT'),cT:S2('cT'),plT:S2('plT'),realT:S2('realT'),incT:S2('incT'),fees:S2('fees'),brks:[...new Set(hs.map(brk))]}};
   let recs;if(view==='group'){const m=new Map();for(const h of rs){const k=pkey(h);if(!m.has(k))m.set(k,[]);m.get(k).push(h)}recs=[...m.values()].map(mk)}else recs=rs.map(h=>mk([h]));
-  recs.sort((a,b)=>(b.q>0)-(a.q>0)||b.vT-a.vT);
+  {const SV={name:r=>r.name,type:r=>TN[r.type]?.n||'',q:r=>r.q,avg:r=>r.avg,price:r=>r.price,usd:r=>r.cur==='USD'?r.vN:null,thb:r=>r.cur==='USD'?null:r.vT,pl:r=>r.plT,pct:r=>r.vT};
+    const f=srt.k&&SV[srt.k];recs.sort((a,b)=>{const live=(b.q>0)-(a.q>0);if(live)return live;if(!f)return b.vT-a.vT;const x=f(a),y=f(b);
+      if(x===null&&y===null)return 0;if(x===null)return 1;if(y===null)return -1;return (typeof x==='string'?x.localeCompare(y,'th'):x-y)*srt.d})}
   const TV=recs.reduce((a,r)=>a+r.vT,0),rp=v=>TV?v/TV*100:0;
   const foot=()=>{const th=recs.filter(r=>r.cur!=='USD'),us=recs.filter(r=>r.cur==='USD'),sm=(xs,f)=>xs.reduce((a,r)=>a+r[f],0);const vTh=sm(th,'vT'),vUsN=sm(us,'vN'),vUs=sm(us,'vT'),pl=sm(recs,'plT'),cc=sm(recs,'cT'),tot=pl+sm(recs,'realT')+sm(recs,'incT'),allv=vTh+vUs;
-    return`<tfoot><tr class="tot"><td><b>รวม</b><div class="sub">${recs.length} ${view==='group'?'ตัว':'รายการ'}${rs.length<pool.length||filt!=='all'||q?' (ตามตัวกรอง)':''}</div></td><td></td><td></td><td></td><td></td><td class="n"><b>${us.length?nf(vUsN,2):''}</b>${us.length?`<div class="sub">≈ ${nf(vUs,0)} บาท</div>`:''}</td><td class="n"><b>${th.length?nf(vTh,0):''}</b>${us.length?`<div class="sub">รวมทั้งหมด ${nf(allv,0)} บาท</div>`:''}</td><td class="n ${cls(pl)}"><b>${sign(pl)}${nf(pl,0)}</b><div class="sub">${sign(pl)}${nf(cc?pl/cc*100:0)}%</div></td><td class="n"><b>100%</b>${Math.abs(TV-V)>0.5&&V?`<div class="sub">= ${nf(TV/V*100,1)}% ของพอร์ต</div>`:""}</td><td></td></tr></tfoot>`};
+    return`<tfoot><tr class="tot"><td><b>รวม</b><div class="sub">${recs.length} ${view==='group'?'ตัว':'รายการ'}${rs.length<pool.length||filt.size||q?' (ตามตัวกรอง)':''}</div></td><td></td><td></td><td></td><td></td><td class="n"><b>${us.length?nf(vUsN,2):''}</b>${us.length?`<div class="sub">≈ ${nf(vUs,0)} บาท</div>`:''}</td><td class="n"><b>${th.length?nf(vTh,0):''}</b>${us.length?`<div class="sub">รวมทั้งหมด ${nf(allv,0)} บาท</div>`:''}</td><td class="n ${cls(pl)}"><b>${sign(pl)}${nf(pl,0)}</b><div class="sub">${sign(pl)}${nf(cc?pl/cc*100:0)}%</div></td><td class="n"><b>100%</b>${Math.abs(TV-V)>0.5&&V?`<div class="sub">= ${nf(TV/V*100,1)}% ของพอร์ต</div>`:""}</td><td></td></tr></tfoot>`};
   const row=r=>{const h=r.h,pp=r.cT?r.plT/r.cT*100:0,tot=r.plT+r.realT+r.incT,live=r.q>0,unpriced=live&&!['bd','gsb','cs'].includes(r.type)&&Math.abs(r.plT)<0.005&&Math.abs(r.price-r.avg)<1e-9&&!r.fees;
     const sub=[view==='group'?r.brks.join(', '):brk(h),r.cur!=='THB'?r.cur:'',h.rate&&live?nf(h.rate)+'%/ปี ≈ '+nf(r.vT*h.rate/100,0)+' บาท/ปี':'',live?'':'ขายหมดแล้ว',r.realT?'ขายได้กำไร '+sign(r.realT)+nf(r.realT,0):'',r.incT?(r.type==='gsb'?'ถูกรางวัล':'รายได้รับแล้ว')+' +'+nf(r.incT,0)+' บาท':''].filter(Boolean).map(esc).join(' · ');
     const totSub=[r.realT?'ขายแล้ว '+sign(r.realT)+nf(r.realT,0):'',r.incT?(r.type==='gsb'?'รางวัล':'รายได้')+' +'+nf(r.incT,0):''].filter(Boolean).join(' · ');
-    return`<tr class="${live?'':'zero'}"><td><button class="nmb" data-g="${esc(r.key)}" title="ดูรายละเอียดกำไร/ขาดทุน">${esc(r.name)}</button><div class="sub">${sub}</div></td><td>${TN[r.type]?.n||''}</td><td class="n">${nf(r.q,4)}</td><td class="n">${nf(r.avg,4)}</td><td class="n"><span class="pv">${nf(r.price,4)}</span>${live&&!['bd','gsb','cs'].includes(r.type)?`<div class="pxa ${!r.pxAt||Date.now()-r.pxAt>7*864e5?'old':''}">${ago(r.pxAt)}</div><div class="pxm">${pxLink(h)}<button class="pxu" data-px="${h.id}">แก้ราคา</button></div>`:''}</td><td class="n">${r.cur==='USD'?nf(r.vN,2)+`<div class="sub">≈ ${nf(r.vT,0)} บาท</div>`:''}</td><td class="n">${r.cur==='USD'?'':nf(r.vT,0)}</td><td class="n ${cls(r.plT)}">${live?(unpriced?`<span class="sub" title="ราคาล่าสุดยังเท่ากับราคาซื้อ">ยังไม่อัปเดตราคา</span>`:sign(r.plT)+nf(r.plT,0)+`<div class="sub">${sign(pp)}${nf(pp)}%</div>`):''}</td><td class="n">${nf(rp(r.vT),1)}%</td><td><div class="acts">${view==='group'?`<button class="chip" data-g="${esc(r.key)}">รายละเอียด</button>`:`<button class="chip" data-t="${h.id}">ซื้อ/ขาย</button><button class="chip" data-e="${h.id}">แก้ไข</button>`}</div></td></tr>`};
-  $('tbl').innerHTML=recs.length?`<table class="stack"><thead><tr><th>ชื่อ</th><th>ประเภท</th><th class="n">คงเหลือ</th><th class="n">ต้นทุนเฉลี่ย</th><th class="n">ราคาล่าสุด</th><th class="n">มูลค่า (USD)</th><th class="n">มูลค่า (บาท)</th><th class="n">กำไร/ขาดทุน (บาท)</th><th class="n">สัดส่วน</th><th></th></tr></thead><tbody>${recs.map(row).join('')}</tbody>${foot()}</table>`:`<div class="empty">${it.length?'ไม่พบรายการที่ค้นหา':'ยังไม่มีรายการ กด "+ เพิ่มสินทรัพย์" หรือนำเข้าจาก Excel'}</div>`;
+    return`<tr class="${live?'':'zero'}"><td><button class="nmb" data-g="${esc(r.key)}" title="ดูรายละเอียดกำไร/ขาดทุน">${esc(r.name)}</button><div class="sub">${sub}</div></td><td>${TN[r.type]?.n||''}</td><td class="n">${nf(r.q,4)}</td><td class="n">${nf(r.avg,4)}</td><td class="n"><span class="pv">${nf(r.price,4)}</span>${live&&!['bd','gsb','cs'].includes(r.type)?`<div class="pxa ${!r.pxAt||Date.now()-r.pxAt>7*864e5?'old':''}" title="${esc(h.pxSrc?'ดึงอัตโนมัติจาก '+h.pxSrc:'กรอกราคาเอง')}">${ago(r.pxAt)}${h.pxSrc?' · อัตโนมัติ':''}</div><div class="pxm">${pxLink(h)}<button class="pxu" data-px="${h.id}">แก้ราคา</button></div>`:''}</td><td class="n">${r.cur==='USD'?nf(r.vN,2)+`<div class="sub">≈ ${nf(r.vT,0)} บาท</div>`:''}</td><td class="n">${r.cur==='USD'?'':nf(r.vT,0)}</td><td class="n ${cls(r.plT)}">${live?(unpriced?`<span class="sub" title="ราคาล่าสุดยังเท่ากับราคาซื้อ">ยังไม่อัปเดตราคา</span>`:sign(r.plT)+nf(r.plT,0)+`<div class="sub">${sign(pp)}${nf(pp)}%</div>`):''}</td><td class="n">${nf(rp(r.vT),1)}%</td><td><div class="acts">${view==='group'?`<button class="chip" data-g="${esc(r.key)}">รายละเอียด</button>`:`<button class="chip" data-t="${h.id}">ซื้อ/ขาย</button><button class="chip" data-e="${h.id}">แก้ไข</button>`}</div></td></tr>`};
+  $('tbl').innerHTML=recs.length?`<table class="stack"><thead><tr>${[['name','ชื่อ',''],['type','ประเภท',''],['q','คงเหลือ','n'],['avg','ต้นทุนเฉลี่ย','n'],['price','ราคาล่าสุด','n'],['usd','มูลค่า (USD)','n'],['thb','มูลค่า (บาท)','n'],['pl','กำไร/ขาดทุน (บาท)','n'],['pct','สัดส่วน','n']].map(([k,l,c])=>`<th class="${c}" aria-sort="${srt.k===k?(srt.d>0?'ascending':'descending'):'none'}"><button class="sb" data-sort="${k}">${l}<span class="ar">${srt.k===k?(srt.d>0?'▲':'▼'):'↕'}</span></button></th>`).join('')}<th></th></tr></thead><tbody>${recs.map(row).join('')}</tbody>${foot()}</table>`:`<div class="empty">${it.length?'ไม่พบรายการที่ค้นหา':'ยังไม่มีรายการ กด "+ เพิ่มสินทรัพย์" หรือนำเข้าจาก Excel'}</div>`;
   {const live=recs.filter(r=>r.q>0);
     if(view==='group'&&live.length>1){const top=live.slice(0,12),mv=Math.max(...top.map(r=>r.vT)),mp=Math.max(...top.map(r=>Math.abs(r.plT)),1);
       const byPl=[...top].sort((a,b)=>b.plT-a.plT);
@@ -558,7 +614,7 @@ function describe(a,b){const out=[];const am=new Map(((a&&a.items)||[]).map(h=>[
 function saveToast(ok,desc,extra){const d=desc.length?desc.slice(0,3).join(' · ')+(desc.length>3?' และอีก '+(desc.length-3)+' อย่าง':''):'ข้อมูล';
   if(ok&&undo&&$('toast').classList.contains('on')&&!$('toastT').textContent.includes('✓')){$('toastT').textContent+=' · บันทึกแล้ว ✓';return}
   toast(ok?'✓ บันทึกสำเร็จ: '+d:'✗ บันทึกไม่สำเร็จ: '+d+(extra?' ('+extra+')':''),null,ok?'ok':'bad')}
-let REV=0,saving=null,RO=false,pendingRemote=null,ME=null;const APPV='1.1.0';
+let REV=0,saving=null,RO=false,pendingRemote=null,ME=null;const APPV='1.2.0';
 const hm=()=>new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
 const ROLE_TH={admin:'ผู้ดูแล (admin)',creator:'ผู้แก้ไข (creator)',viewer:'ผู้ดู (viewer)'};
 const CAN_EDIT=()=>!!ME&&ME.role!=='viewer';
@@ -573,7 +629,7 @@ async function flush(){if(!saveT)return;clearTimeout(saveT);saveT=null;if(!CAN_E
   const desc=describe(savedSnap,S);log('save rev '+REV+': '+(desc.join(', ')||'-'));
   try{saving=api('/api/portfolio',{method:'PUT',body:{data:{items:S.items,fx:S.fx,cash:S.cash||[]},rev:REV,desc}});const r=await saving;REV=r.rev;savedSnap=JSON.parse(JSON.stringify(S));log('save ok rev '+REV);setStatus('บันทึกแล้ว · '+hm());saveToast(true,desc)}
   catch(e){if(e.status===409){log('conflict → rev '+e.body.rev);REV=e.body.rev;pendingRemote=null;load(e.body.data);setStatus('โหลดข้อมูลล่าสุดแล้ว · '+hm());toast('มีคนอื่นแก้ข้อมูลไปก่อน ระบบโหลดข้อมูลล่าสุดแล้ว รายการที่เพิ่งทำยังไม่ถูกบันทึก กรุณาทำอีกครั้ง',null,'bad')}
-    else if(e.status===403){toast('บัญชีนี้ดูได้อย่างเดียว แก้ไขไม่ได้',null,'bad');pull(true)}
+    else if(e.status===403){toast('บันทึกไม่ได้: '+e.message+' · ระบบโหลดข้อมูลล่าสุดกลับมาแล้ว',null,'bad');setTimeout(()=>pull(true),0)}
     else{log('save FAIL '+e.message);setStatus('บันทึกไม่สำเร็จ · '+hm());saveToast(false,desc,e.message)}}
   finally{saving=null}}
 function persist(){if(!CAN_EDIT()){toast('บัญชีนี้ดูได้อย่างเดียว แก้ไขไม่ได้',null,'bad');pull(true);return}clearTimeout(saveT);setStatus('กำลังบันทึก…');saveT=setTimeout(flush,250)}
@@ -596,13 +652,13 @@ function fillCur(){const v=$('iCur').value;$('iCur').innerHTML=Object.keys(S.fx)
 
 // asset form
 function openItem(id){
-  editId=id;const h=S.items.find(y=>y.id===id)||{type:filt!=='all'?filt:'th',cur:'THB',acc:bf.size===1&&!bf.has(NOBRK)?[...bf][0]:''};
+  editId=id;const h=S.items.find(y=>y.id===id)||{type:filt.size===1?[...filt][0]:'th',cur:'THB',acc:bf.size===1&&!bf.has(NOBRK)?[...bf][0]:''};
   $('fTitle').textContent=id?'แก้ไขสินทรัพย์':'เพิ่มสินทรัพย์';$('bDel').hidden=!id;
   document.querySelectorAll('.buy1').forEach(e=>e.hidden=!!id);document.querySelector('.editTx').hidden=!id;
   $('bQ').required=$('bP').required=!id;
-  $('iType').value=h.type;$('iCur').value=h.cur||'THB';$('iName').value=h.name||'';$('iAcc').value=h.acc||'';$('iPrice').value=id?(h.price??''):'';$('iRate').value=h.rate??'';$('iMat').value=h.mat||'';$('iNote').value=h.note||'';
+  $('iType').value=h.type;$('iCur').value=h.cur||'THB';$('iName').value=h.name||'';$('iAcc').value=h.acc||'';$('iPrice').value=id?(h.price??''):'';$('iRate').value=h.rate??'';$('iMat').value=h.mat||'';$('iNote').value=h.note||'';$('iSym').value=h.sym||'';
   $('bD').value=today();$('bQ').value='';$('bP').value='';resetFee('b');
-  syncType();open('ovItem');setTimeout(()=>$('iName').focus(),30);
+  syncType();syncSym();open('ovItem');setTimeout(()=>$('iName').focus(),30);
 }
 function syncType(){const t=$('iType').value;$('lQty').textContent=TN[t].u;if((t==='fx'||t==='au')&&$('iCur').value==='THB'&&!editId)$('iCur').value='USD';syncCur()}
 function syncCur(){const c=$('iCur').value;$('lPx').textContent='ราคาล่าสุดต่อหน่วย ('+c+')';$('lBP').textContent='ราคาต่อหน่วย ('+c+')';$('bFa').textContent=c==='THB'?'บาท':c;syncG()}
@@ -617,7 +673,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('ovAsk').class
 $('askNo').onclick=askOff;$('askYes').onclick=()=>{const f=askFn;askOff();if(f)f()};
 $('fItem').onsubmit=e=>{e.preventDefault();
   const n=v=>v===''?undefined:+v;
-  const base={type:$('iType').value,cur:$('iCur').value,name:$('iName').value.trim(),acc:$('iAcc').value.trim()||undefined,rate:n($('iRate').value),mat:$('iMat').value||undefined,note:$('iNote').value.trim()||undefined};
+  const base={type:$('iType').value,cur:$('iCur').value,name:$('iName').value.trim(),acc:$('iAcc').value.trim()||undefined,rate:n($('iRate').value),mat:$('iMat').value||undefined,note:$('iNote').value.trim()||undefined,sym:$('iSym').value.trim()||undefined};
+  if(!scopeOk(base.acc,base.type))return;
   if(!editId)realize();
   if(editId){const h=S.items.find(y=>y.id===editId);Object.assign(h,base);if($('iPrice').value!=='')setPxAll(h,+$('iPrice').value)}
   else{const bq=+$('bQ').value,bp=+$('bP').value,sib=S.items.find(g=>pkey(g)===pkey(base));const np={id:uid(),...base,price:$('iPrice').value!==''?+$('iPrice').value:sib?+sib.price||bp:bp,pxAt:$('iPrice').value===''&&sib?sib.pxAt:undefined,txns:[(()=>{const fv=feeVal('b',bq,bp);return{...T($('bD').value,'buy',bq,bp,fv.fee),fc:fv.fc,fv:fv.fv,fs:fv.fs}})()]};S.items.push(np);if($('iPrice').value!=='')setPxAll(np,+$('iPrice').value)}
@@ -783,14 +840,15 @@ for(const px of ['t','b']){$(px+'FX').onclick=e=>{e.preventDefault();$(px+'FD').
 
 // clicks / inputs
 document.body.addEventListener('click',e=>{
-  const t=e.target.closest('[data-cb],[data-cdel],[data-iy],[data-ik],[data-ib],[data-px],[data-f],[data-b],[data-e],[data-t],[data-xt],[data-et],[data-cur],[data-yr],[data-view],[data-g]');if(!t)return;
+  const t=e.target.closest('[data-sort],[data-cb],[data-cdel],[data-iy],[data-ik],[data-ib],[data-px],[data-f],[data-b],[data-e],[data-t],[data-xt],[data-et],[data-cur],[data-yr],[data-view],[data-g]');if(!t)return;
+  if(t.dataset.sort){const k=t.dataset.sort;if(srt.k===k){if(srt.d===(['name','type'].includes(k)?1:-1))srt.d*=-1;else srt={k:null,d:-1}}else srt={k,d:['name','type'].includes(k)?1:-1};render();return}
   if(t.dataset.cb!==undefined){cbk=t.dataset.cb;renderCash();return}
   if(t.dataset.cdel){const x=(S.cash||[]).find(c=>c.id===t.dataset.cdel);if(!x)return;ask('ลบรายการเงินสดนี้?',(CASH_K[x.kind]||'')+' '+nf(x.amt,2)+' '+x.cur+' ที่ '+x.acc+(x.d?' วันที่ '+x.d:''),'ลบรายการ',()=>{const o=snap();S.cash=S.cash.filter(c=>c.id!==x.id);commit();renderCash();toast('ลบรายการเงินสดแล้ว',()=>{restore(o);renderCash()})});return}
   if(t.dataset.iy!==undefined){incYr=t.dataset.iy;renderInc();return}
   if(t.dataset.ik!==undefined){incKind=t.dataset.ik;renderInc();return}
   if(t.dataset.ib){incBy=t.dataset.ib;renderInc();return}
   if(t.dataset.px){openPx(t.dataset.px);return}
-  if(t.dataset.f){filt=t.dataset.f;render()}
+  if(t.dataset.f){const k=t.dataset.f;if(k==='all')filt.clear();else if(filt.has(k))filt.delete(k);else filt.add(k);render()}
   else if(t.dataset.b){const b=t.dataset.b;if(b==='all')bf.clear();else if(bf.has(b))bf.delete(b);else bf.add(b);render()}
   else if(t.dataset.e)openItem(t.dataset.e);
   else if(t.dataset.view){view=t.dataset.view;render()}
@@ -806,7 +864,7 @@ document.body.addEventListener('change',e=>{const id=e.target.dataset.p;if(!id||
 
 // bulk price
 function openPx(only){const ok=only?pkey(S.items.find(x=>x.id===only)):null;$('pxH').textContent=only?'แก้ราคาล่าสุด':'อัปเดตราคาล่าสุด';const seen=new Set();const hs=S.items.filter(h=>(only?pkey(h)===ok:calc(h).q>0)&&!seen.has(pkey(h))&&seen.add(pkey(h))).sort((a,b)=>brk(a).localeCompare(brk(b))||a.name.localeCompare(b.name));
-  $('pxList').innerHTML=hs.length?`<table class="stack"><thead><tr><th>ชื่อ</th><th>โบรกเกอร์</th><th class="n">ราคาเดิม</th><th class="n">ราคาใหม่</th></tr></thead><tbody>${hs.map(h=>`<tr><td><b>${esc(h.name)}</b> <span class="sub">${h.cur}</span>${pxLink(h)?`<div class="pxm" style="justify-content:flex-start">${pxLink(h)}</div>`:''}</td><td>${esc([...new Set(sibs(h).map(brk))].join(', '))}</td><td class="n">${nf(h.price,4)}<div class="sub">${ago(h.pxAt)}</div></td><td class="n"><input class="pr" type="number" step="any" min="0" data-p="${h.id}" value="${+h.price||0}"></td></tr>`).join('')}</tbody></table>`:'<div class="empty">ยังไม่มีสินทรัพย์</div>';open('ovPx');if(only)setTimeout(()=>{const i=document.querySelector('#pxList [data-p]');if(i){i.focus();i.select()}},30)}
+  $('pxList').innerHTML=hs.length?`<table class="stack"><thead><tr><th>ชื่อ</th><th>โบรกเกอร์</th><th class="n">ราคาเดิม</th><th class="n">ราคาใหม่</th></tr></thead><tbody>${hs.map(h=>`<tr><td><b>${esc(h.name)}</b> <span class="sub">${h.cur}</span>${pxLink(h)?`<div class="pxm" style="justify-content:flex-start">${pxLink(h)}</div>`:''}</td><td>${esc([...new Set(sibs(h).map(brk))].join(', '))}</td><td class="n">${nf(h.price,4)}<div class="sub">${ago(h.pxAt)}</div></td><td class="n"><input class="pr" type="number" step="any" min="0" data-p="${h.id}" value="${+h.price||0}"></td></tr>`).join('')}</tbody></table>`:'<div class="empty">ยังไม่มีสินทรัพย์</div>';open('ovPx');pxStatus();if(only)setTimeout(()=>{const i=document.querySelector('#pxList [data-p]');if(i){i.focus();i.select()}},30)}
 $('bPx').onclick=()=>openPx();
 $('fPx').onsubmit=e=>{e.preventDefault();const o=snap();let n=0;document.querySelectorAll('#pxList [data-p]').forEach(i=>{const h=S.items.find(y=>y.id===i.dataset.p);if(h&&i.value!==''&&+i.value!==+h.price){setPxAll(h,+i.value);n++}});close();if(n){commit();toast('อัปเดตราคา '+n+' รายการแล้ว',()=>restore(o))}};
 
@@ -963,18 +1021,21 @@ $('bXl').onclick=()=>{xmsg('ใช้วิธีนี้อัปเดตร�
 // load
 function unifyPx(){const m=new Map();let ch=[];for(const h of S.items){const k=pkey(h);if(!m.has(k))m.set(k,[]);m.get(k).push(h)}
   for(const hs of m.values()){if(hs.length<2||hs.every(h=>+h.price===+hs[0].price))continue;const best=hs.reduce((a,b)=>(b.pxAt||0)>(a.pxAt||0)?b:a);if(!best.pxAt)continue;
-    for(const h of hs)if(+h.price!==+best.price){h.price=+best.price;h.pxAt=best.pxAt;ch.push(h.name+' ('+brk(h)+')')}}return ch}
+    for(const h of hs)if(+h.price!==+best.price){h.price=+best.price;h.pxAt=best.pxAt;h.pxSrc=best.pxSrc;ch.push(h.name+' ('+brk(h)+')')}}return ch}
 function load(d){if(d&&Array.isArray(d.items)){S=migrate(JSON.parse(JSON.stringify(d)));fillCur();savedSnap=JSON.parse(JSON.stringify(S));
   const ch=unifyPx();if(ch.length&&!S.sample&&CAN_EDIT()){log('unify '+ch.join(', '));setTimeout(()=>persist(),0)}}render()}
 render();
 dl={save:async({filename,data})=>{const url=URL.createObjectURL(data instanceof Blob?data:new Blob([data]));const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);return{status:'saved'}}};
-(async()=>{try{const me=await api('/api/me');ME=me.user;setupUser(me);const r=await api('/api/portfolio');REV=r.rev;load(r.data);
+(async()=>{try{const me=await api('/api/me');ME=me.user;setupUser(me);await loginPrices();const r=await api('/api/portfolio');REV=r.rev;load(r.data);
+  if(r.noAccess){$('scopeTxt').textContent='บัญชีนี้ยังไม่ได้รับสิทธิ์ดูข้อมูลพอร์ต กรุณาติดต่อผู้ดูแลระบบให้ตั้งขอบเขต (โบรก/ประเภท) ให้';$('scopeBar').classList.add('none')}
   setStatus((CAN_EDIT()?'บันทึกอัตโนมัติ':'ดูอย่างเดียว')+(r.updatedBy?' · แก้ล่าสุดโดย '+r.updatedBy:''))}catch(e){if(e.status!==401)setStatus('เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ · ลองรีเฟรช')}})();
 // ---- account, users, change log ----
 function setupUser(me){$('appName').textContent=me.app||'PortDee';document.title=(me.app||'PortDee')+' · พอร์ตการลงทุน';
   $('whoName').textContent=ME.displayName;$('whoRole').textContent=ME.isOwner?'เจ้าของระบบ (admin)':ROLE_TH[ME.role];
   document.body.classList.toggle('owner',!!ME.isOwner);$('secBar').hidden=!(ME.isOwner&&me.alerts>0);$('secN').textContent=me.alerts||0;
   document.body.classList.toggle('viewer',ME.role==='viewer');document.body.classList.toggle('admin',ME.role==='admin');
+  document.body.classList.toggle('limited',!(ME.scope&&ME.scope.full));
+  $('scopeBar').hidden=!!(ME.scope&&ME.scope.full);$('scopeTxt').textContent=scopeTxt(ME.scope);
   $('verTxt').textContent=(me.app||'PortDee')+' v'+(me.version||APPV);render()}
 $('bAcct').onclick=()=>{$('acW').textContent=ME?ME.displayName+' ('+ME.username+') · '+(ME.isOwner?'เจ้าของระบบ (admin)':ROLE_TH[ME.role]):'';open('ovAcct')};
 $('acPw').onclick=()=>{close();['pwC','pwN','pwN2'].forEach(i=>$(i).value='');$('pwMsg').textContent='';open('ovPw');setTimeout(()=>$('pwC').focus(),30)};
@@ -986,18 +1047,27 @@ let USERS=[];
 const fmtT=t=>t?new Date(t).toLocaleString('th-TH',{day:'numeric',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'—';
 async function loadUsers(){try{USERS=(await api('/api/users')).users;renderUsers()}catch(e){$('usMsg').textContent=e.message}}
 function canManageU(u){if(u.is_owner)return false;if(ME.isOwner)return true;return u.role!=='admin'}
+const TYPE_N=k=>(TN[k]&&TN[k].n)||k;
+function scopeTxt(sc){if(!sc)return'';if(sc.full)return'ทุกโบรก × ทุกประเภท';
+  const b=sc.allBrokers?'ทุกโบรก':sc.brokers.length?sc.brokers.join(', '):'';const t=sc.allTypes?'ทุกประเภท':sc.types.length?sc.types.map(TYPE_N).join(', '):'';
+  return b&&t?b+' × '+t:'ยังไม่ได้รับสิทธิ์ดูข้อมูล'}
+function scopeOk(acc,type){const sc=ME&&ME.scope;if(!sc||sc.full)return true;const b=acc||NOBRK;
+  if(!sc.allBrokers&&!sc.brokers.includes(b)){toast('คุณไม่มีสิทธิ์ในโบรก "'+b+'" · ใช้ได้: '+(sc.brokers.join(', ')||'ไม่มี'),null,'bad');return false}
+  if(!sc.allTypes&&!sc.types.includes(type)){toast('คุณไม่มีสิทธิ์ในประเภท '+TYPE_N(type)+' · ใช้ได้: '+(sc.types.map(TYPE_N).join(', ')||'ไม่มี'),null,'bad');return false}return true}
+const ago2=t=>t?fmtT(t):'—';
 function renderUsers(){const roles=ME.isOwner?['admin','creator','viewer']:['creator','viewer'];
   $('nuR').querySelector('option[value=admin]').hidden=!ME.isOwner;
-  $('usList').innerHTML=`<table class="stack"><thead><tr><th>ชื่อผู้ใช้</th><th>ชื่อที่แสดง</th><th>สิทธิ์</th><th>สถานะ</th><th>เข้าใช้ล่าสุด</th><th></th></tr></thead><tbody>${USERS.map(u=>{const m=canManageU(u);return`<tr${u.tampered?' class="tamper"':''}><td><b>${esc(u.username)}</b>${u.id===ME.id?' <span class="sub">(คุณ)</span>':''}${u.tampered?'<div class="dn" style="font-size:13px">⚠️ ถูกแก้นอกโปรแกรม · ล็อกอยู่</div>':''}</td><td>${esc(u.display_name)}</td>
+  $('usList').innerHTML=`<table class="stack"><thead><tr><th>ผู้ใช้</th><th>สิทธิ์</th><th>เห็นข้อมูล</th><th>การใช้งาน</th><th></th></tr></thead><tbody>${USERS.map(u=>{const m=canManageU(u);const noAcc=!u.is_owner&&scopeTxt(u.scope)==='ยังไม่ได้รับสิทธิ์ดูข้อมูล';return`<tr${u.tampered?' class="tamper"':''}><td><b>${esc(u.username)}</b>${u.id===ME.id?' <span class="sub">(คุณ)</span>':''}<div class="sub">${esc(u.display_name)}${u.disabled?' · <span class="dn">ปิดใช้งาน</span>':''}</div>${u.tampered?'<div class="dn" style="font-size:13px">⚠️ ถูกแก้นอกโปรแกรม · ล็อกอยู่</div>':''}</td>
   <td>${u.is_owner?'<b>เจ้าของระบบ</b> (admin)':m&&!u.tampered?`<select data-urole="${u.id}" aria-label="สิทธิ์ของ ${esc(u.username)}">${roles.map(r=>`<option value="${r}" ${u.role===r?'selected':''}>${ROLE_TH[r]}</option>`).join('')}</select>`:ROLE_TH[u.role]}</td>
-  <td>${u.disabled?'<span class="dn">ปิดใช้งาน</span>':'ใช้งานอยู่'}</td><td class="sub">${fmtT(u.last_login_at)}</td>
-  <td><div class="acts">${u.tampered&&ME.isOwner?`<button class="chip" data-uok="${u.id}">ตรวจแล้ว ยืนยันบัญชี</button>`:''}${m&&!u.tampered?`<button class="chip" data-upw="${u.id}">ตั้งรหัสใหม่</button>`:''}${m&&u.id!==ME.id&&!u.tampered?`<button class="chip" data-udis="${u.id}">${u.disabled?'เปิดใช้':'ปิดใช้'}</button>`:''}${(m||(u.tampered&&ME.isOwner&&!u.is_owner))&&u.id!==ME.id?`<button class="chip" data-udel="${u.id}" style="color:var(--dn)">ลบ</button>`:''}${ME.isOwner&&u.role==='admin'&&!u.is_owner&&!u.disabled&&!u.tampered?`<button class="chip" data-uown="${u.id}">โอนความเป็นเจ้าของ</button>`:''}</div></td></tr>`}).join('')}</tbody></table>
-  <p class="note">${ME.isOwner?'คุณเป็นเจ้าของระบบ: เพิ่ม/แก้/ลบ admin ได้คนเดียว':'admin ทั่วไปจัดการได้เฉพาะผู้แก้ไขและผู้ดู · การเพิ่มหรือแก้ admin ต้องให้เจ้าของระบบทำ'}</p>`}
+  <td>${u.is_owner?'ทั้งหมด':`<span${noAcc?' class="dn"':''}>${esc(scopeTxt(u.scope))}</span>`}${m&&!u.tampered?`<div><button class="lnk" data-uscope="${u.id}">ตั้งขอบเขต</button></div>`:''}</td>
+  <td class="ulast"><div>เข้าระบบ <span class="nw">${ago2(u.last_login_at)}</span></div><div>ใช้งานล่าสุด <span class="nw">${ago2(u.last_seen_at)}</span></div><div class="nw">30 วัน: เข้า ${u.logins30} · แก้ ${u.edits30} ครั้ง</div></td>
+  <td><div class="acts"><button class="chip" data-uact="${u.id}">ดูประวัติ</button>${u.tampered&&ME.isOwner?`<button class="chip" data-uok="${u.id}">ตรวจแล้ว ยืนยันบัญชี</button>`:''}${m&&!u.tampered?`<button class="chip" data-upw="${u.id}">ตั้งรหัสใหม่</button>`:''}${m&&u.id!==ME.id&&!u.tampered?`<button class="chip" data-udis="${u.id}">${u.disabled?'เปิดใช้':'ปิดใช้'}</button>`:''}${(m||(u.tampered&&ME.isOwner&&!u.is_owner))&&u.id!==ME.id?`<button class="chip" data-udel="${u.id}" style="color:var(--dn)">ลบ</button>`:''}${ME.isOwner&&u.role==='admin'&&!u.is_owner&&!u.disabled&&!u.tampered?`<button class="chip" data-uown="${u.id}">โอนความเป็นเจ้าของ</button>`:''}</div></td></tr>`}).join('')}</tbody></table>
+  <p class="note">${ME.isOwner?'คุณเป็นเจ้าของระบบ: เห็นข้อมูลทั้งหมด และเพิ่ม/แก้/ลบ admin ได้คนเดียว':'admin ทั่วไปจัดการได้เฉพาะผู้แก้ไขและผู้ดู และให้ขอบเขตได้ไม่เกินที่ตัวเองมี'} · ผู้ใช้ใหม่จะยังไม่เห็นข้อมูลจนกว่าจะตั้งขอบเขต</p>`}
 $('acUsers').onclick=()=>{close();$('usMsg').textContent='';['nuU','nuD','nuP'].forEach(i=>$(i).value='');$('nuR').value='viewer';open('ovUsers');loadUsers()};
 const genPw=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';const r=crypto.getRandomValues(new Uint32Array(12));return [...r].map(x=>a[x%a.length]).join('')};
 $('nuGen').onclick=()=>{$('nuP').value=genPw();$('nuP').type='text'};
 $('fNewUser').onsubmit=async e=>{e.preventDefault();try{await api('/api/users',{method:'POST',body:{username:$('nuU').value,displayName:$('nuD').value,role:$('nuR').value,password:$('nuP').value}});
-  $('usMsg').textContent='✓ เพิ่มผู้ใช้ '+$('nuU').value.trim().toLowerCase()+' แล้ว · ส่งชื่อผู้ใช้และรหัสผ่านให้เจ้าของบัญชี';['nuU','nuD','nuP'].forEach(i=>$(i).value='');loadUsers()}catch(err){$('usMsg').textContent=err.message}};
+  const nu=$('nuU').value.trim().toLowerCase();$('usMsg').textContent='✓ เพิ่มผู้ใช้ '+nu+' แล้ว · ส่งชื่อผู้ใช้และรหัสผ่านให้เจ้าของบัญชี · ตอนนี้ยังไม่เห็นข้อมูล ให้ตั้งขอบเขต';['nuU','nuD','nuP'].forEach(i=>$(i).value='');await loadUsers();const u=USERS.find(x=>x.username===nu);if(u)openScope(u)}catch(err){$('usMsg').textContent=err.message}};
 document.addEventListener('change',async e=>{const id=e.target.dataset&&e.target.dataset.urole;if(!id)return;
   try{await api('/api/users/'+id,{method:'PATCH',body:{role:e.target.value}});$('usMsg').textContent='✓ เปลี่ยนสิทธิ์แล้ว (ผู้ใช้คนนั้นต้องเข้าสู่ระบบใหม่)';if(+id===ME.id)location.reload();else loadUsers()}catch(err){$('usMsg').textContent=err.message;loadUsers()}});
 function askPw(title,msg,ok,fn){$('cfT').textContent=title;$('cfM').textContent=msg;$('cfOk').textContent=ok;$('cfP').value='';$('cfE').textContent='';cfFn=fn;open('ovConf');setTimeout(()=>$('cfP').focus(),30)}
@@ -1010,7 +1080,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-upw],[data
   else if(t.dataset.udis){api('/api/users/'+u.id,{method:'PATCH',body:{disabled:!u.disabled}}).then(()=>{$('usMsg').textContent='✓ '+(u.disabled?'เปิดใช้':'ปิดใช้')+' '+u.username+' แล้ว';loadUsers()}).catch(err=>$('usMsg').textContent=err.message)}
   else if(t.dataset.udel){ask('ลบผู้ใช้ '+u.username+'?','บัญชีนี้จะเข้าระบบไม่ได้อีก ข้อมูลพอร์ตไม่หาย','ลบผู้ใช้',async()=>{try{await api('/api/users/'+u.id,{method:'DELETE'});open('ovUsers');loadUsers()}catch(err){$('usMsg').textContent=err.message;open('ovUsers')}})}});
 // change log + restore (admin)
-const ACTION_TH={db_direct_change:'⚠️ แก้ฐานข้อมูลโดยตรง',tamper_detected:'⚠️ ตรวจพบบัญชีถูกแก้',tamper_approved:'ยืนยันบัญชี',admin_reset:'⚠️ รีเซ็ต admin ผ่าน Railway',reseal_all:'⚠️ ประทับตราใหม่ทั้งหมด',seal_init:'ประทับตราบัญชีครั้งแรก',guard_missing:'⚠️ ตัวตรวจจับถูกปิด',owner_set:'ตั้งเจ้าของระบบ',owner_transfer:'โอนความเป็นเจ้าของ',login:'เข้าสู่ระบบ',login_failed:'เข้าสู่ระบบไม่สำเร็จ',save:'บันทึกข้อมูล',password_changed:'เปลี่ยนรหัสผ่าน',user_created:'เพิ่มผู้ใช้',user_updated:'แก้ผู้ใช้',user_deleted:'ลบผู้ใช้',restore:'กู้คืนข้อมูล'};
+const ACTION_TH={db_direct_change:'⚠️ แก้ฐานข้อมูลโดยตรง',tamper_detected:'⚠️ ตรวจพบบัญชีถูกแก้',tamper_approved:'ยืนยันบัญชี',admin_reset:'⚠️ รีเซ็ต admin ผ่าน Railway',reseal_all:'⚠️ ประทับตราใหม่ทั้งหมด',seal_init:'ประทับตราบัญชีครั้งแรก',guard_missing:'⚠️ ตัวตรวจจับถูกปิด',owner_set:'ตั้งเจ้าของระบบ',owner_transfer:'โอนความเป็นเจ้าของ',login:'เข้าสู่ระบบ',login_failed:'เข้าสู่ระบบไม่สำเร็จ',save:'บันทึกข้อมูล',password_changed:'เปลี่ยนรหัสผ่าน',user_created:'เพิ่มผู้ใช้',user_updated:'แก้ผู้ใช้',user_deleted:'ลบผู้ใช้',restore:'กู้คืนข้อมูล',logout:'ออกจากระบบ',view:'เปิดดูพอร์ต',import:'นำเข้า Excel',export_backup:'ส่งออกไฟล์',export_template:'ดาวน์โหลดเทมเพลต',report_fee:'ดูรายงานค่าธรรมเนียม',report_income:'ดูรายงานรายได้',export_activity:'ส่งออกรายงานการใช้งาน',price_auto:'ดึงราคาอัตโนมัติ',price_manual:'กดดึงราคา',scope_reset:'รีเซ็ตขอบเขต (อัปเกรด)'};
 $('acLog').onclick=async()=>{close();open('ovLog');$('lgList').innerHTML='<div class="empty">กำลังโหลด…</div>';$('hsList').innerHTML='';
   try{const [a,h]=await Promise.all([api('/api/audit?limit=300'),api('/api/history')]);
     $('lgList').innerHTML=a.log.length?`<table class="stack"><thead><tr><th>เวลา</th><th>ผู้ใช้</th><th>การกระทำ</th><th>รายละเอียด</th></tr></thead><tbody>${a.log.map(x=>`<tr${x.security&&/^(db_direct|tamper_det|admin_reset|reseal|guard)/.test(x.action)?' class="tamper"':''}><td class="sub" style="white-space:nowrap">${fmtT(x.at)}</td><td>${esc(x.username||'—')}</td><td>${ACTION_TH[x.action]||esc(x.action)}</td><td>${esc(x.detail||'')}${x.rev?` <span class="sub">(rev ${x.rev})</span>`:''}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">ยังไม่มีประวัติ</div>';
@@ -1025,8 +1095,81 @@ $('secBtn').onclick=async()=>{open('ovSec');$('secList').innerHTML='<div class="
 $('secSeen').onclick=async()=>{try{await api('/api/alerts/seen',{method:'POST'});$('secBar').hidden=true;close();toast('✓ รับทราบแล้ว',null,'ok')}catch(e){toast(e.message,null,'bad')}};
 $('secUsers').onclick=()=>{close();$('acUsers').click()};
 
+// ---- access scope editor (admin) ----
+let scopeU=null,SCOPT=null;
+async function openScope(u){scopeU=u;$('scT').textContent='ขอบเขตที่ '+u.username+' เห็นและแก้ได้';$('scMsg').textContent='';$('scB').innerHTML=$('scTy').innerHTML='<span class="sub">กำลังโหลด…</span>';open('ovScope');
+  try{SCOPT=await api('/api/scope-options')}catch(e){$('scMsg').textContent=e.message;return}
+  const sc=u.scope||{},mine=SCOPT.mine;const brokers=[...new Set([...SCOPT.brokers,...(sc.brokers||[])])].sort((a,b)=>a.localeCompare(b,'th'));
+  $('scAllB').checked=!!sc.allBrokers;$('scAllB').disabled=!mine.allBrokers;$('scAllT').checked=!!sc.allTypes;$('scAllT').disabled=!mine.allTypes;
+  $('scB').innerHTML=brokers.map(b=>`<label class="ck"><input type="checkbox" data-scb="${esc(b)}" ${(sc.brokers||[]).includes(b)?'checked':''}> ${esc(b)}</label>`).join('')||'<span class="sub">ยังไม่มีโบรกในพอร์ต</span>';
+  $('scTy').innerHTML=SCOPT.types.map(t=>`<label class="ck"><input type="checkbox" data-sct="${t}" ${(sc.types||[]).includes(t)?'checked':''}> ${esc(TYPE_N(t))}</label>`).join('');syncScope()}
+function syncScope(){document.querySelectorAll('[data-scb]').forEach(i=>i.disabled=$('scAllB').checked);document.querySelectorAll('[data-sct]').forEach(i=>i.disabled=$('scAllT').checked)}
+$('scAllB').onchange=$('scAllT').onchange=syncScope;
+$('scAdd').onclick=()=>{const v=$('scNew').value.trim();if(!v)return;if(!document.querySelector(`[data-scb="${CSS.escape(v)}"]`)){const l=document.createElement('label');l.className='ck';l.innerHTML=`<input type="checkbox" checked> `;l.firstChild.dataset.scb=v;l.append(v);$('scB').append(l)}$('scNew').value=''};
+$('fScope').onsubmit=async e=>{e.preventDefault();const scope={allBrokers:$('scAllB').checked,brokers:[...document.querySelectorAll('[data-scb]:checked')].map(i=>i.dataset.scb),allTypes:$('scAllT').checked,types:[...document.querySelectorAll('[data-sct]:checked')].map(i=>i.dataset.sct)};
+  try{await api('/api/users/'+scopeU.id,{method:'PATCH',body:{scope}});$('ovScope').classList.remove('on');$('usMsg').textContent='✓ ตั้งขอบเขตของ '+scopeU.username+' แล้ว: '+scopeTxt({...scope,full:scope.allBrokers&&scope.allTypes});toast('✓ บันทึกขอบเขตของ '+scopeU.username+' แล้ว',null,'ok');loadUsers()}catch(err){$('scMsg').textContent=err.message}};
+
+// ---- activity report ----
+let ACTL=[],actMore=false;
+const GROUP_TH={'':'ทุกเหตุการณ์',login:'เข้า/ออกระบบ',view:'เปิดดูพอร์ต',edit:'แก้ข้อมูล',excel:'Excel นำเข้า/ส่งออก',report:'ดูรายงาน',price:'ดึงราคา',users:'จัดการผู้ใช้',security:'⚠️ ความปลอดภัย'};
+function openAct(userId){close();const adm=ME.role==='admin';$('acTt').textContent=adm?'รายงานการใช้งาน':'ประวัติการใช้งานของฉัน';
+  $('afU').closest('label').hidden=!adm;
+  if(adm)$('afU').innerHTML='<option value="">ทุกคน</option>'+USERS.map(u=>`<option value="${u.id}">${esc(u.username)} · ${esc(u.display_name)}</option>`).join('');
+  $('afU').value=userId?String(userId):'';
+  $('afG').innerHTML=Object.entries(GROUP_TH).filter(([k])=>k!=='security'||ME.isOwner).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');$('afG').value='';
+  const d=new Date(Date.now()-29*864e5);$('afF').value=d.toISOString().slice(0,10);$('afT').value='';open('ovAct');loadAct()}
+function actQuery(before){const q=new URLSearchParams();if($('afU').value)q.set('user',$('afU').value);if($('afG').value)q.set('group',$('afG').value);if($('afF').value)q.set('from',$('afF').value);if($('afT').value)q.set('to',$('afT').value);if(before)q.set('before',before);q.set('limit','300');return q}
+async function loadAct(more){if(!more)$('actList').innerHTML='<div class="empty">กำลังโหลด…</div>';
+  try{const r=await api('/api/activity?'+actQuery(more?ACTL[ACTL.length-1].id:0));ACTL=more?ACTL.concat(r.log):r.log;actMore=r.more;renderAct()}catch(e){$('actList').innerHTML='<div class="empty">'+esc(e.message)+'</div>'}}
+function renderAct(){const users=new Set(ACTL.map(x=>x.username).filter(Boolean)).size,logins=ACTL.filter(x=>x.action==='login').length,edits=ACTL.filter(x=>x.action==='save').length,fails=ACTL.filter(x=>x.action==='login_failed').length;
+  $('actSum').textContent=ACTL.length?`${ACTL.length}${actMore?'+':''} รายการ · ${users} คน · เข้าระบบ ${logins} ครั้ง · บันทึกข้อมูล ${edits} ครั้ง${fails?' · เข้าระบบไม่สำเร็จ '+fails+' ครั้ง':''}`:'';
+  $('actList').innerHTML=ACTL.length?`<table class="stack"><thead><tr><th>เวลา</th><th>ผู้ใช้</th><th>การกระทำ</th><th>รายละเอียด</th><th>IP / อุปกรณ์</th></tr></thead><tbody>${ACTL.map(x=>`<tr${x.security||x.action==='login_failed'?' class="tamper"':''}><td class="sub" style="white-space:nowrap">${fmtT(x.at)}</td><td>${esc(x.username||(x.action==='login_failed'?'(ไม่รู้จัก)':'ระบบ'))}${x.display_name&&x.display_name!==x.username?`<div class="sub">${esc(x.display_name)}</div>`:''}</td><td>${ACTION_TH[x.action]||esc(x.action)}</td><td>${esc(x.detail||'')}</td><td class="sub">${esc(x.ip||'—')}${x.device?`<div>${esc(x.device)}</div>`:''}</td></tr>`).join('')}</tbody></table>`:'<div class="empty">ไม่มีรายการในช่วงนี้</div>';
+  $('actMore').hidden=!actMore}
+$('fAct').onsubmit=e=>{e.preventDefault();loadAct()};
+$('actMore').onclick=()=>loadAct(true);
+$('actXl').onclick=async()=>{if(typeof XLSX==='undefined')return toast('โหลดตัวอ่าน Excel ไม่สำเร็จ',null,'bad');
+  const rows=ACTL.map(x=>({'เวลา':new Date(x.at).toLocaleString('th-TH'),'ผู้ใช้':x.username||'','ชื่อที่แสดง':x.display_name||'','การกระทำ':ACTION_TH[x.action]||x.action,'รายละเอียด':x.detail||'','IP':x.ip||'','อุปกรณ์':x.device||''}));
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(rows),'การใช้งาน');const name='portdee-activity-'+today()+'.xlsx';
+  await dl.save({filename:name,data:new Blob([XLSX.write(wb,{type:'array',bookType:'xlsx'})])},'export_activity');toast('✓ ส่งออก '+name+' แล้ว',null,'ok')};
+$('acAct').onclick=()=>openAct();
+$('usAct').onclick=()=>openAct();
+document.addEventListener('click',e=>{const t=e.target.closest('[data-uscope],[data-uact]');if(!t)return;const u=USERS.find(x=>String(x.id)===(t.dataset.uscope||t.dataset.uact));if(!u)return;
+  if(t.dataset.uscope)openScope(u);else openAct(u.id)});
+
+// ---- what the browser reports to the activity log ----
+function report(action,detail){api('/api/activity',{method:'POST',body:{action,detail}}).catch(()=>{})}
+{const save=dl.save;dl.save=async(o,kind)=>{const r=await save(o);report(kind||(/template/.test(o.filename)?'export_template':'export_backup'),o.filename);return r}}
+$('xFile').addEventListener('change',()=>{const f=$('xFile').files[0];if(f)report('import',f.name)});
+$('bFee').addEventListener('click',()=>report('report_fee'));
+$('bInc').addEventListener('click',()=>report('report_income'));
+
+// ---- automatic prices ----
+let PXLAST=null;const TRIG_TH={start:'ตอนเริ่มระบบ',daily:'รอบประจำวัน',login:'ตอนเข้าสู่ระบบ',manual:'กดดึงราคา'};
+async function loginPrices(){try{if(sessionStorage.getItem('pdPx'))return;sessionStorage.setItem('pdPx','1')}catch(e){}
+  setStatus('กำลังดึงราคาล่าสุด…');const p=api('/api/prices/refresh',{method:'POST',body:{reason:'login'}}).catch(e=>({error:e.message}));
+  const r=await Promise.race([p,new Promise(res=>setTimeout(()=>res({late:true}),8000))]);
+  if(r.late){p.then(x=>{pxNote(x);pull()});return}pxNote(r)}
+function pxNote(r){if(!r)return;if(r.last)PXLAST=r.last;if(r.error){toast('ดึงราคาอัตโนมัติไม่สำเร็จ: '+r.error,null,'bad');return}
+  if(r.ran&&r.last){const n=r.last.updated.length,f=r.last.failed.length;toast('ดึงราคาล่าสุดแล้ว: เปลี่ยน '+n+' รายการ'+(r.last.fx?' · USD/THB '+r.last.fx.rate:'')+(f?' · ไม่สำเร็จ '+f+' รายการ (ดูที่ อัปเดตราคา)':''),null,f?'bad':'ok')}}
+async function pxStatus(){const el=$('pxAuto');el.innerHTML='<span class="sub">กำลังโหลดสถานะการดึงราคา…</span>';
+  try{const s=await api('/api/prices/status');const L=s.last;
+    if(!s.enabled){el.innerHTML='<span class="sub">ปิดการดึงราคาอัตโนมัติไว้ (ตัวแปร PRICE_FEED=off)</span>';$('pxRun').hidden=true;return}
+    el.innerHTML=(L?`ดึงราคาอัตโนมัติล่าสุด <b>${fmtT(L.at)}</b> (${TRIG_TH[L.trigger]||L.trigger}${L.by?' · '+esc(L.by):''}) · เปลี่ยน ${L.updated.length} รายการ${L.fx?` · USD/THB ${L.fx.rate} <span class="sub">(${esc(L.fx.source)})</span>`:''}`:'ยังไม่เคยดึงราคาอัตโนมัติ')+
+      `<div class="sub">ดึงเองวันละครั้งหลัง ${s.dailyHour}:00 น. และทุกครั้งที่เข้าสู่ระบบ · หุ้นไทย/หุ้นนอก/ETF จาก Yahoo · ทอง 99.99% (USD/ออนซ์) จาก xaus.com · ค่าเงินจาก Frankfurter · กองทุนจาก ก.ล.ต. ${s.fundKey?'':'<b class="dn">(ยังไม่ได้ตั้ง SEC_API_KEY จึงยังดึงราคากองทุนไม่ได้)</b>'} · พันธบัตร/ฉลาก/เงินฝากไม่มีราคาตลาด</div>`+
+      (L&&L.failed.length?`<details style="margin-top:6px"><summary class="dn">ดึงไม่สำเร็จ ${L.failed.length} รายการ</summary><ul style="margin:6px 0 0;padding-left:20px">${L.failed.map(f=>`<li><b>${esc(f.name)}</b>${f.symbol?' ('+esc(f.symbol)+')':''}: ${esc(f.error)}</li>`).join('')}</ul><div class="sub">แก้โดยกด แก้ไข ที่สินทรัพย์นั้น แล้วใส่ "รหัสสำหรับดึงราคา" ให้ตรง หรือใส่ - เพื่อปิดการดึงราคาของตัวนั้น</div></details>`:'')}
+  catch(e){el.innerHTML='<span class="sub">'+esc(e.message)+'</span>'}}
+$('pxRun').onclick=async()=>{const b=$('pxRun');b.disabled=true;b.textContent='กำลังดึงราคา…';
+  try{await flush();const r=await api('/api/prices/refresh',{method:'POST',body:{reason:'manual'}});if(r.skipped)toast(r.skipped+' · ลองใหม่อีกครั้งในอีกสักครู่',null,'bad');else pxNote(r);close();await pull(true)}
+  catch(e){toast(e.message,null,'bad')}finally{b.disabled=false;b.textContent='ดึงราคาอัตโนมัติตอนนี้'}};
+// default symbol shown in the asset form
+function symDefault(type,name,cur){name=(name||'').trim().toUpperCase();if(!name)return'';
+  return type==='th'?(name.endsWith('.BK')?name:name+'.BK'):type==='etf'?(cur==='THB'&&!name.includes('.')?name+'.BK':name):type==='fx'?name:type==='au'?'ทองคำ 99.99% USD/ออนซ์':type==='fd'?'ชื่อย่อกองทุน '+name:''}
+function syncSym(){const t=$('iType').value,d=symDefault(t,$('iName').value,$('iCur').value);
+  $('iSym').placeholder=d?'อัตโนมัติ: '+d:(['bd','gsb','cs'].includes(t)?'ไม่มีราคาตลาด (กรอกเอง)':'')}
+['iType','iName','iCur'].forEach(i=>$(i).addEventListener('input',syncSym));['iType','iCur'].forEach(i=>$(i).addEventListener('change',syncSym));
+
 }
 </script>
-<div class="foot" id="verTxt">PortDee v1.1.0</div>
+<div class="foot" id="verTxt">PortDee v1.2.0</div>
 </body>
 </html>

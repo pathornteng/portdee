@@ -1,0 +1,24 @@
+'use strict';
+const assert = require('assert');
+const SC = require('../lib/scope');
+const d = { items: [{ id: '1', acc: 'A', type: 'th', name: 'PTT' }, { id: '2', acc: 'B', type: 'th', name: 'SCB' }, { id: '3', acc: 'A', type: 'fd', name: 'F' }, { id: '4', type: 'au', name: 'G' }],
+  fx: { USD: 33 }, cash: [{ id: 'c1', acc: 'A' }, { id: 'c2', acc: 'B' }] };
+const u = { scope_all_brokers: false, scope_brokers: ['A'], scope_all_types: false, scope_types: ['th'] };
+const sc = SC.scopeOf(u);
+const f = SC.filterData(sc, d);
+assert.deepStrictEqual(f.items.map(i => i.id), ['1']);
+assert.deepStrictEqual(f.cash.map(c => c.id), ['c1']);
+const m = SC.mergeData(sc, d, { items: [{ id: '1', acc: 'A', type: 'th', name: 'PTT2' }, { id: '9', acc: 'A', type: 'th', name: 'NEW' }], fx: { USD: 99 }, cash: [] });
+assert.deepStrictEqual(m.data.items.map(i => i.id).sort(), ['1', '2', '3', '4', '9']);
+assert.strictEqual(m.data.fx.USD, 33, 'limited users cannot change FX');
+assert.deepStrictEqual(m.data.cash.map(c => c.id), ['c2'], 'hidden cash kept, own cash replaced');
+assert.ok(SC.mergeData(sc, d, { items: [{ id: '9', acc: 'B', type: 'th', name: 'X' }], cash: [] }).error, 'other broker rejected');
+assert.ok(SC.mergeData(sc, d, { items: [{ id: '2', acc: 'A', type: 'th', name: 'steal' }], cash: [] }).error, 'cannot take over hidden id');
+assert.ok(SC.mergeData(sc, d, { items: [{ id: '1', acc: 'A', type: 'fd', name: 'PTT' }], cash: [] }).error, 'other type rejected');
+assert.strictEqual(SC.filterData(SC.scopeOf({}), d).items.length, 0, 'no scope = nothing');
+assert.deepStrictEqual(SC.filterData(SC.scopeOf({ scope_all_brokers: true, scope_types: ['au'] }), d).items.map(i => i.id), ['4']);
+assert.ok(SC.withinScope(u, { allBrokers: false, brokers: ['A'], allTypes: false, types: ['th'] }));
+assert.ok(!SC.withinScope(u, { allBrokers: false, brokers: ['B'], allTypes: false, types: [] }));
+assert.ok(!SC.withinScope(u, { allBrokers: true, brokers: [], allTypes: false, types: [] }));
+assert.ok(SC.withinScope({ is_owner: true }, { allBrokers: true, allTypes: true, brokers: [], types: [] }));
+console.log('scope: all ok');

@@ -1,12 +1,15 @@
 {
   "name": "portdee",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "PortDee – โปรแกรมจัดการพอร์ตการลงทุน (หุ้นไทย หุ้นต่างประเทศ ทอง ETF กองทุน พันธบัตร ฉลากออมสิน)",
   "main": "server.js",
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "migrate": "node db/migrate.js",
+    "migrate:status": "node db/migrate.js --status",
+    "test": "node test/run.js"
   },
   "engines": {
     "node": ">=20"
