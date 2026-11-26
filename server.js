@@ -666,7 +666,7 @@ app.post('/api/history/:rev/restore', need('admin'), wrap(async (req, res) => {
 
 // ---- activity log ----
 // Events the browser reports (Excel files, reports). Everything else is logged by the server itself.
-const CLIENT_EVENTS = ['export_backup', 'export_template', 'import', 'report_fee', 'report_income', 'export_activity'];
+const CLIENT_EVENTS = ['export_backup', 'export_template', 'import', 'report_fee', 'report_income', 'report_realized', 'export_activity'];
 const activityLimiter = rateLimit({ windowMs: 60e3, limit: 60, standardHeaders: true, legacyHeaders: false });
 app.post('/api/activity', activityLimiter, need(), wrap(async (req, res) => {
   const { action, detail } = req.body || {};
@@ -680,7 +680,7 @@ const GROUPS = {
   view: ['view'],
   edit: ['save', 'restore', 'import'],
   excel: ['export_backup', 'export_template', 'import', 'export_activity'],
-  report: ['report_fee', 'report_income'],
+  report: ['report_fee', 'report_income', 'report_realized'],
   users: ['user_created', 'user_updated', 'user_deleted', 'owner_transfer', 'tamper_approved', 'password_changed', 'scope_reset', 'owner_set'],
   price: ['price_auto', 'price_manual'],
 };

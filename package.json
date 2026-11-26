@@ -1,6 +1,6 @@
 {
   "name": "portdee",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "PortDee – โปรแกรมจัดการพอร์ตการลงทุน (หุ้นไทย หุ้นต่างประเทศ ทอง ETF กองทุน พันธบัตร ฉลากออมสิน)",
   "main": "server.js",
   "private": true,
